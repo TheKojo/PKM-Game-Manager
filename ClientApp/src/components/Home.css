@@ -1,0 +1,28 @@
+﻿body {
+}
+
+form.searchb {
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+
+select#pkmlist {
+    width: 175px;
+    float: left;
+}
+
+.pkminfo{
+    float:left;
+    padding-left:10px;
+}
+
+.type1{
+    position:relative;
+}
+
+.type2 {
+    position: absolute;
+    bottom:0px;
+    right:20px;
+}
