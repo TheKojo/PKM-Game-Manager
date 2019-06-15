@@ -7,7 +7,7 @@ form.searchb {
 }
 
 
-select#pkmlist {
+#pkmtable{
     width: 175px;
     float: left;
 }
@@ -25,4 +25,43 @@ select#pkmlist {
     position: absolute;
     bottom:0px;
     right:20px;
+}
+
+.hp {
+    position: relative;
+}
+
+.egggroup1 {
+    position: relative;
+}
+
+.egggroup2 {
+    position: absolute;
+    bottom: 0px;
+    right: -60px;
+}
+
+thead, tbody {
+    display: block;
+    
+}
+
+tbody {
+    max-height: 450px;
+    overflow: auto;
+    width: 175px;
+}
+
+td, th {
+    /*border: 1px solid #dddddd;*/
+    text-align: left;
+    padding: 8px;
+}
+
+tr:hover {
+    background-color: #ccc;
+}
+
+.selected {
+    background-color: #6666ff;
 }

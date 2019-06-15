@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './Home.css';
+import ReactTable from "react-table";
+import "react-table/react-table.css";
 
 
 
@@ -16,25 +18,48 @@ export class Home extends Component {
         this.changeInfo = this.changeInfo.bind(this);
         this.capitalize = this.capitalize.bind(this);
 
-
     }
 
     componentDidMount() {
         fetch('api/Home/Index')
             .then(response => response.json())
             .then(data => this.setState({ pkmList: data, isLoading: false }));
-
     }
 
-    changeInfo() {
+
+    changeInfo(pkmId) {
         var nameBox = document.getElementById('namebox');
         var internalNameBox = document.getElementById('internalname');
         var kindBox = document.getElementById('kind');
-        var pkmListForm = document.getElementById('pkmlist');
-        var pkmIndex = pkmListForm.selectedIndex;
+        //var pkmListForm = document.getElementById('pkmlist');
+        //var oldIndex = pkmIndex;
+        var table = document.getElementById("pkmtable");
+        var oldRow = document.getElementsByClassName("selected");
+        if (typeof oldRow[0] !== "undefined") {
+            oldRow[0].classList.remove("selected");
+        }
+        
+
+        var pkmIndex = pkmId - 1;//pkmListForm.selectedIndex;
+        
+        table.rows[pkmId].classList.add("selected");
+
+
+        var hp = document.getElementById('hp');
+        var attack = document.getElementById('attack');
+        var defense = document.getElementById('defense');
+        var spatk = document.getElementById('spatk');
+        var spdef = document.getElementById('spdef');
+        var speed = document.getElementById('speed');
 
         nameBox.value = this.state.pkmList[pkmIndex].name;
         internalNameBox.value = this.state.pkmList[pkmIndex].internalName;
+        hp.value = this.state.pkmList[pkmIndex].hp;
+        attack.value = this.state.pkmList[pkmIndex].attack;
+        defense.value = this.state.pkmList[pkmIndex].defense;
+        spatk.value = this.state.pkmList[pkmIndex].spAtk;
+        spdef.value = this.state.pkmList[pkmIndex].spDef;
+        speed.value = this.state.pkmList[pkmIndex].speed;
         kindBox.value = this.state.pkmList[pkmIndex].kind;
 
         var typeOneForm = document.getElementById('type1');
@@ -60,21 +85,33 @@ export class Home extends Component {
         
 
         return (
-            <div>
+            
+            <div >
+
                 <form class="searchb">
                     Filter:<br/>
-                    <input type="text" name="search"></input>
+                    <input type="text" name="search"/>
                 </form>
 
-                
-                <select id="pkmlist" size="20" onChange={this.changeInfo}>
-                    {this.state.pkmList.map(pkm =><option key={pkm.pokemonId}>{pkm.name}</option>)}
-                </select>
-
+                <table id="pkmtable">
+                    <thead>
+                        <tr>
+                            <th>Num</th>
+                            <th>Pokemon</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.pkmList.map(pkm => <tr key={pkm.pokemonId} onClick={() => this.changeInfo(pkm.pokemonId)}>
+                            <td>{pkm.pokemonId}</td>
+                            <td>{pkm.name}</td>
+                        </tr>
+                        )}
+                    </tbody>
+                </table>
 
                 <form class="pkminfo">
                     Name:<br/>
-                    <input id="namebox" type="text" name="pkmname"></input>
+                    <input id="namebox" type="text" name="pkmname"/>
                     <br />
                     <div class="type1">
                         Type-1:<br />
@@ -124,39 +161,90 @@ export class Home extends Component {
                             </select>
                         </div>
                     </div>
-                    <br />InternalName:<br></br>
-                    <input type="text" id="internalname"></input>
-                    <br />Kind:<br></br>
-                    <input type="text" id="kind"></input>
+                    <br />InternalName:<br />
+                    <input type="text" id="internalname" />
+                    <div class="hp">
+                        <br />HP:<br />
+                        <input type="number" id="hp" min="1" max="255"/>
+                        <br />Attack:<br />
+                        <input type="number" id="attack" min="1" max="255"/>
+                        <br />Defense:<br />
+                        <input type="number" id="defense" min="1" max="255" />
+                        <br />Sp. Attack:<br />
+                        <input type="number" id="spatk" min="1" max="255" />
+                        <br />Sp. Defense:<br />
+                        <input type="number" id="spdef" min="1" max="255" />
+                        <br />Speed:<br />
+                        <input type="number" id="speed" min="1" max="255" />
+                    </div>
+                    <br />Gender Rate:<br />
+                    <select id="genderrate">
+                        <option>AlwaysMale</option>
+                        <option>FemaleOneEighth</option>
+                        <option>Female25Percent</option>
+                        <option>Female50Percent</option>
+                        <option>Female75Percent</option>
+                        <option>FemaleSevenEighths</option>
+                        <option>AlwaysFemale</option>
+                        <option>Genderless</option>
+                    </select>
+                    <br />Growth Rate:<br />
+                    <select id="growthrate">
+                        <option>Fast</option>
+                        <option>Medium</option>
+                        <option>MediumFast</option>
+                        <option>Slow</option>
+                        <option>Parabolic</option>
+                        <option>MediumSlow</option>
+                        <option>Erratic</option>
+                        <option>Fluctuating</option>
+                    </select>
+                    <div class="egggroup1">
+                        <br />Egg Group 1:<br />
+                        <select id="egggroup1">
+                            <option>Monster</option>
+                            <option>Water1</option>
+                            <option>Water2</option>
+                            <option>Water3</option>
+                            <option>Bug</option>
+                            <option>Flying</option>
+                            <option>Fairy</option>
+                            <option>Grass</option>
+                            <option>Humanlike</option>
+                            <option>Mineral</option>
+                            <option>Amorphous</option>
+                            <option>Dragon</option>
+                            <option>Ditto</option>
+                            <option>Undiscovered</option>
+                        </select>
+                        <div class="egggroup2">
+                            <br />Egg Group 2:<br />
+                            <select id="egggroup2">
+                                <option>None</option>
+                                <option>Monster</option>
+                                <option>Water1</option>
+                                <option>Water2</option>
+                                <option>Water3</option>
+                                <option>Bug</option>
+                                <option>Flying</option>
+                                <option>Fairy</option>
+                                <option>Grass</option>
+                                <option>Humanlike</option>
+                                <option>Mineral</option>
+                                <option>Amorphous</option>
+                                <option>Dragon</option>
+                                <option>Ditto</option>
+                                <option>Undiscovered</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />Kind:<br />
+                    <input type="text" id="kind"/>
                 </form>
             </div>    
 
-
-        /*
-        <h1>Hello, world!</h1>
-        <p>Welcome to your new single-page application, built with:</p>
-        <ul>
-          <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-          <li><a href='https://facebook.github.io/react/'>React</a> for client-side code</li>
-          <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-        </ul>
-        <p>To help you get started, we've also set up:</p>
-        <ul>
-          <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-          <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-          <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-        </ul>
-        <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
-        */
-    );
+        );
     }
 
-
-
-
-
 }
 
-export class Pokemon {
-    name: string;
-}
