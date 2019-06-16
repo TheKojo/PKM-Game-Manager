@@ -84,5 +84,7 @@ namespace pkm_game_manager.Models
         public int BattlerEnemyY { get; set; }
 
         public int BattlerAltitude { get; set; }
+
+        public byte[] Icon { get; set; }
     }
 }

@@ -1,4 +1,6 @@
 ﻿body {
+    font-family: 'Electrolize';
+    font-size: 16px;
 }
 
 form.searchb {
@@ -49,7 +51,7 @@ thead, tbody {
 tbody {
     max-height: 450px;
     overflow: auto;
-    width: 175px;
+    width: 200px;
 }
 
 td, th {
@@ -64,4 +66,5 @@ tr:hover {
 
 .selected {
     background-color: #6666ff;
+    color: #ffffff;
 }

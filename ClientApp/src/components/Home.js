@@ -86,8 +86,8 @@ export class Home extends Component {
 
         return (
             
-            <div >
-
+            <div>
+                <link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' />
                 <form class="searchb">
                     Filter:<br/>
                     <input type="text" name="search"/>
@@ -96,13 +96,13 @@ export class Home extends Component {
                 <table id="pkmtable">
                     <thead>
                         <tr>
-                            <th>Num</th>
+                            <th></th>
                             <th>Pokemon</th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.state.pkmList.map(pkm => <tr key={pkm.pokemonId} onClick={() => this.changeInfo(pkm.pokemonId)}>
-                            <td>{pkm.pokemonId}</td>
+                            <td><img src={`data:image/jpeg;base64,${pkm.icon}`} /></td>
                             <td>{pkm.name}</td>
                         </tr>
                         )}
