@@ -17,6 +17,7 @@ export class Home extends Component {
 
         this.changeInfo = this.changeInfo.bind(this);
         this.capitalize = this.capitalize.bind(this);
+        this.checkTop = this.checkTop.bind(this);
 
     }
 
@@ -26,8 +27,18 @@ export class Home extends Component {
             .then(data => this.setState({ pkmList: data, isLoading: false }));
     }
 
+    checkTop() {
+        var tb = document.getElementById("tbodyid");
+        if (tb.scrollTop === 0) {
+            tb.classList.remove("scrolled");
+        }
+        else {
+            tb.classList.add("scrolled");
+        }
+    }
 
     changeInfo(pkmId) {
+
         var nameBox = document.getElementById('namebox');
         var internalNameBox = document.getElementById('internalname');
         var kindBox = document.getElementById('kind');
@@ -89,7 +100,7 @@ export class Home extends Component {
             <div>
                 <link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' />
                 <form class="searchb">
-                    Filter:<br/>
+                    <font color="#4d5f5c">Filter:</font><br/>
                     <input type="text" name="search"/>
                 </form>
 
@@ -100,7 +111,7 @@ export class Home extends Component {
                             <th>Pokemon</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbodyid" onScroll={this.checkTop}>
                         {this.state.pkmList.map(pkm => <tr key={pkm.pokemonId} onClick={() => this.changeInfo(pkm.pokemonId)}>
                             <td><img src={`data:image/jpeg;base64,${pkm.icon}`} /></td>
                             <td>{pkm.name}</td>

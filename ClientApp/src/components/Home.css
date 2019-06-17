@@ -1,6 +1,10 @@
 ﻿body {
     font-family: 'Electrolize';
     font-size: 16px;
+    color: #ffffff;
+    /*background-color: #12424a;*/
+    /*background-color: #0a2226;*/
+    background-color: #bcd4d1;
 }
 
 form.searchb {
@@ -14,9 +18,17 @@ form.searchb {
     float: left;
 }
 
-.pkminfo{
-    float:left;
-    padding-left:10px;
+.pkminfo {
+    position: absolute;
+    left: 250px;
+    float: left;
+    padding-left: 20px;
+    padding-right: 250px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    border-radius: 15px;
+    /*background-color: #0099b5;*/
+    background-color: #688c87
 }
 
 .type1{
@@ -45,13 +57,14 @@ form.searchb {
 
 thead, tbody {
     display: block;
-    
+    color: #4d5f5c;
 }
 
 tbody {
     max-height: 450px;
     overflow: auto;
     width: 200px;
+    color: #4d5f5c;
 }
 
 td, th {
@@ -61,10 +74,72 @@ td, th {
 }
 
 tr:hover {
-    background-color: #ccc;
+    /*background-color: #045fac;*/
+    background-color: #688c87;
+    color: #ffffff;
 }
 
 .selected {
-    background-color: #6666ff;
+    /*background-color: #00a9c7;*/
+    background-color: #8abdb7;
     color: #ffffff;
+}
+
+input[type=text], input[type=number] {
+    /*background-color: #165059;*/
+    background-color: #4d5f5c;
+    border: none;
+    padding: 5px;
+}
+
+
+select,option {
+    /*background-color: #165059;*/
+    background-color: #4d5f5c;
+    border: none;
+    padding: 5px;
+}
+
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #8abdb7;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #688c87;
+}
+
+/* Handle hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #4d5f5c;
+}
+
+tbody:after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: linear-gradient(to bottom, rgba(188,212,209,0), rgba(188,212,209,1) 90%);
+    width: 200px;
+    height: 4em;
+}
+
+
+.scrolled:before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    pointer-events: none;
+    background-image: linear-gradient(to top, rgba(188,212,209,0), rgba(188,212,209,1) 90%);
+    width: 200px;
+    height: 4em;
 }
