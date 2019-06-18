@@ -86,5 +86,11 @@ namespace pkm_game_manager.Models
         public int BattlerAltitude { get; set; }
 
         public byte[] Icon { get; set; }
+
+        public byte[] FrontSprite { get; set; }
+
+        public byte[] BackSprite { get; set; }
+
+        public byte[] Artwork { get; set; }
     }
 }

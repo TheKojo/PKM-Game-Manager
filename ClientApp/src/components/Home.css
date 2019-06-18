@@ -58,13 +58,35 @@ form.searchb {
     height:70px;
     right:10px;
     
+}
 
+.sectionFour {
+    position: relative;
+    left: 50px;
+}
+
+.sectionFive {
+    position: relative;
+    left: 75px;
+}
+
+.rate {
+    position:relative;
+    float: left;
+    padding: 10px;
 }
 
 .stat {
     float:left;
     padding: 5px;
 }
+.evstat {
+    position:relative;
+    float: left;
+    padding: 10px;
+    left:10px;
+}
+
 
 canvas {
     position: relative;
@@ -72,15 +94,13 @@ canvas {
     border-radius: 10px;
 }
 
-.egggroup1 {
+.egggroup {
     position: relative;
+    float: left;
+    padding:10px;
 }
 
-.egggroup2 {
-    position: absolute;
-    bottom: 0px;
-    right: -60px;
-}
+
 
 thead, tbody {
     display: block;
@@ -171,3 +191,7 @@ tbody:after {
     height: 4em;
 }
 
+#artwork{
+    position: absolute;
+    top: -10px;
+}

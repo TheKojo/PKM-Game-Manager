@@ -55,6 +55,8 @@ export class Home extends Component {
         
         table.rows[pkmId].classList.add("selected");
 
+        var artwork = document.getElementById('artwork');
+        artwork.src = 'data:image/png;base64,' + this.state.pkmList[pkmIndex].artwork;
 
         var hp = document.getElementById('hp');
         var attack = document.getElementById('attack');
@@ -62,6 +64,13 @@ export class Home extends Component {
         var spatk = document.getElementById('spatk');
         var spdef = document.getElementById('spdef');
         var speed = document.getElementById('speed');
+
+        var evhp = document.getElementById('evhp');
+        var evattack = document.getElementById('evattack');
+        var evdefense = document.getElementById('evdefense');
+        var evspatk = document.getElementById('evspatk');
+        var evspdef = document.getElementById('evspdef');
+        var evspeed = document.getElementById('evspeed');
 
         nameBox.value = this.state.pkmList[pkmIndex].name;
         internalNameBox.value = this.state.pkmList[pkmIndex].internalName;
@@ -71,6 +80,12 @@ export class Home extends Component {
         spatk.value = this.state.pkmList[pkmIndex].spAtk;
         spdef.value = this.state.pkmList[pkmIndex].spDef;
         speed.value = this.state.pkmList[pkmIndex].speed;
+        evhp.value = this.state.pkmList[pkmIndex].evhp;
+        evattack.value= this.state.pkmList[pkmIndex].evAttack;
+        evdefense.value = this.state.pkmList[pkmIndex].evDefense;
+        evspatk.value = this.state.pkmList[pkmIndex].evSpAtk;
+        evspdef.value = this.state.pkmList[pkmIndex].evSpDef;
+        evspeed.value = this.state.pkmList[pkmIndex].evSpeed;
         kindBox.value = this.state.pkmList[pkmIndex].kind;
 
         var typeOneForm = document.getElementById('type1');
@@ -83,6 +98,12 @@ export class Home extends Component {
         else {
             typeTwoForm.value = this.capitalize(typeTwoStr);
         }
+
+        requestAnimationFrame(() => { this.updateBar(0, pkmIndex) });
+
+    }
+
+    updateBar(prog, pkmIndex) {
 
         var canvas = document.getElementById('statCanvas');
         var context = canvas.getContext("2d");
@@ -101,42 +122,45 @@ export class Home extends Component {
         context.fillText("SPE", 166, 122);
 
         var bst = 0;
+
         var stat = this.state.pkmList[pkmIndex].hp;
-        context.fillStyle = this.getBarColor(stat);
-        context.fillRect(20, 110 - (stat / 2), 10, stat / 2);
+        context.fillStyle = this.getBarColor(stat * (prog / 100));
+        context.fillRect(20, 110 - (stat / 2) * (prog / 100), 10, (stat / 2) * (prog / 100));
         bst = bst + stat;
 
         stat = this.state.pkmList[pkmIndex].attack;
-        context.fillStyle = this.getBarColor(stat);
-        context.fillRect(50, 110 - (stat / 2), 10, stat / 2);
+        context.fillStyle = this.getBarColor(stat * (prog / 100));
+        context.fillRect(50, 110 - (stat / 2) * (prog / 100), 10, (stat / 2) * (prog / 100));
         bst = bst + stat;
 
         stat = this.state.pkmList[pkmIndex].defense;
-        context.fillStyle = this.getBarColor(stat);
-        context.fillRect(80, 110 - (stat / 2), 10, stat / 2);
+        context.fillStyle = this.getBarColor(stat * (prog / 100));
+        context.fillRect(80, 110 - (stat / 2) * (prog / 100), 10, (stat / 2) * (prog / 100));
         bst = bst + stat;
 
         stat = this.state.pkmList[pkmIndex].spAtk;
-        context.fillStyle = this.getBarColor(stat);
-        context.fillRect(110, 110 - (stat / 2), 10, stat / 2);
+        context.fillStyle = this.getBarColor(stat * (prog / 100));
+        context.fillRect(110, 110 - (stat / 2) * (prog / 100), 10, (stat / 2) * (prog / 100));
         bst = bst + stat;
 
         stat = this.state.pkmList[pkmIndex].spDef;
-        context.fillStyle = this.getBarColor(stat);
-        context.fillRect(140, 110 - (stat / 2), 10, stat / 2);
+        context.fillStyle = this.getBarColor(stat * (prog / 100));
+        context.fillRect(140, 110 - (stat / 2) * (prog / 100), 10, (stat / 2) * (prog / 100));
         bst = bst + stat;
 
         stat = this.state.pkmList[pkmIndex].speed;
-        context.fillStyle = this.getBarColor(stat);
-        context.fillRect(170, 110 - (stat / 2), 10, stat / 2);
+        context.fillStyle = this.getBarColor(stat * (prog / 100));
+        context.fillRect(170, 110 - (stat / 2) * (prog / 100), 10, (stat / 2) * (prog / 100));
         bst = bst + stat;
 
-        context.fillStyle = this.getBarColor(bst/6);
-        context.fillText("BST: "+bst, 85, 135);
-    }
+        context.fillStyle = this.getBarColor(bst / 6);
+        context.fillText("BST: " + bst, 85, 135);
 
-    updateBar() {
-
+        if (prog < 100) {
+            requestAnimationFrame(() => { this.updateBar(prog + 5, pkmIndex) });
+        }
+        
+        
     }
 
     getBarColor(statVal) {
@@ -198,6 +222,7 @@ export class Home extends Component {
                     <input type="text" name="search"/>
                 </form>
 
+
                 <table id="pkmtable">
                     <thead>
                         <tr>
@@ -215,6 +240,9 @@ export class Home extends Component {
                 </table>
 
                 <form class="pkminfo">
+                    <div>
+                        <img id="artwork" />
+                    </div>
                     <div class="sectionOne">
                         Name:<br />
                         <input id="namebox" type="text" name="pkmname" />
@@ -268,6 +296,8 @@ export class Home extends Component {
                         </div>
                         <br />InternalName:<br />
                         <input type="text" id="internalname" />
+                        <br />Kind:<br />
+                        <input type="text" id="kind" />
                     </div> 
 
                     
@@ -306,48 +336,92 @@ export class Home extends Component {
                     <canvas id="statCanvas" width="202" height="140">
                     </canvas>
 
-                    <br />Gender Rate:<br />
-                    <select id="genderrate">
-                        <option>AlwaysMale</option>
-                        <option>FemaleOneEighth</option>
-                        <option>Female25Percent</option>
-                        <option>Female50Percent</option>
-                        <option>Female75Percent</option>
-                        <option>FemaleSevenEighths</option>
-                        <option>AlwaysFemale</option>
-                        <option>Genderless</option>
-                    </select>
-                    <br />Growth Rate:<br />
-                    <select id="growthrate">
-                        <option>Fast</option>
-                        <option>Medium</option>
-                        <option>MediumFast</option>
-                        <option>Slow</option>
-                        <option>Parabolic</option>
-                        <option>MediumSlow</option>
-                        <option>Erratic</option>
-                        <option>Fluctuating</option>
-                    </select>
-                    <div class="egggroup1">
-                        <br />Egg Group 1:<br />
-                        <select id="egggroup1">
-                            <option>Monster</option>
-                            <option>Water1</option>
-                            <option>Water2</option>
-                            <option>Water3</option>
-                            <option>Bug</option>
-                            <option>Flying</option>
-                            <option>Fairy</option>
-                            <option>Grass</option>
-                            <option>Humanlike</option>
-                            <option>Mineral</option>
-                            <option>Amorphous</option>
-                            <option>Dragon</option>
-                            <option>Ditto</option>
-                            <option>Undiscovered</option>
-                        </select>
-                        <div class="egggroup2">
-                            <br />Egg Group 2:<br />
+                    <div class="sectionThree">
+                        <div class="evstat">
+                            EVHP:<br />
+                            <input type="number" id="evhp" min="0" max="3" />
+                        </div>
+
+                        <div class="evstat">
+                            EVAtk:<br />
+                            <input type="number" id="evattack" min="0" max="3" />
+                        </div>
+
+                        <div class="evstat">
+                            EVDef:<br />
+                            <input type="number" id="evdefense" min="0" max="3" />
+                        </div>
+
+                        <div class="evstat">
+                            EVSpA:<br />
+                            <input type="number" id="evspatk" min="0" max="3" />
+                        </div>
+
+                        <div class="evstat">
+                            EVSpD:<br />
+                            <input type="number" id="evspdef" min="0" max="3" />
+                        </div>
+
+                        <div class="evstat">
+                            EVSpe:<br />
+                            <input type="number" id="evspeed" min="0" max="3" />
+                        </div>
+                    </div>
+
+
+                    <div class="sectionFour">
+                        <div class="rate">
+                            Gender Rate:<br />
+                            <select id="genderrate">
+                                <option>AlwaysMale</option>
+                                <option>FemaleOneEighth</option>
+                                <option>Female25Percent</option>
+                                <option>Female50Percent</option>
+                                <option>Female75Percent</option>
+                                <option>FemaleSevenEighths</option>
+                                <option>AlwaysFemale</option>
+                                <option>Genderless</option>
+                            </select>
+                        </div>
+
+                        <div class="rate">
+                            Growth Rate:<br />
+                            <select id="growthrate">
+                                <option>Fast</option>
+                                <option>Medium</option>
+                                <option>MediumFast</option>
+                                <option>Slow</option>
+                                <option>Parabolic</option>
+                                <option>MediumSlow</option>
+                                <option>Erratic</option>
+                                <option>Fluctuating</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <div class="sectionFive">
+                        <div class="egggroup">
+                            Egg Group 1:<br />
+                            <select id="egggroup1">
+                                <option>Monster</option>
+                                <option>Water1</option>
+                                <option>Water2</option>
+                                <option>Water3</option>
+                                <option>Bug</option>
+                                <option>Flying</option>
+                                <option>Fairy</option>
+                                <option>Grass</option>
+                                <option>Humanlike</option>
+                                <option>Mineral</option>
+                                <option>Amorphous</option>
+                                <option>Dragon</option>
+                                <option>Ditto</option>
+                                <option>Undiscovered</option>
+                            </select>
+                        </div>
+                        <div class="egggroup">
+                            Egg Group 2:<br />
                             <select id="egggroup2">
                                 <option>None</option>
                                 <option>Monster</option>
@@ -367,8 +441,7 @@ export class Home extends Component {
                             </select>
                         </div>
                     </div>
-                    <br />Kind:<br />
-                    <input type="text" id="kind"/>
+                    
                 </form>
             </div>    
 
