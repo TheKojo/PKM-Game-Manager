@@ -74,6 +74,7 @@ export class Home extends Component {
 
         nameBox.value = this.state.pkmList[pkmIndex].name;
         internalNameBox.value = this.state.pkmList[pkmIndex].internalName;
+        kindBox.value = this.state.pkmList[pkmIndex].kind;
         hp.value = this.state.pkmList[pkmIndex].hp;
         attack.value = this.state.pkmList[pkmIndex].attack;
         defense.value = this.state.pkmList[pkmIndex].defense;
@@ -248,7 +249,7 @@ export class Home extends Component {
                         <input id="namebox" type="text" name="pkmname" />
                         <br />
                         <div class="type1">
-                            Type-1:<br />
+                            Type 1:<br />
                             <select id="type1">
                                 <option>Normal</option>
                                 <option>Fighting</option>
@@ -271,7 +272,7 @@ export class Home extends Component {
                             </select>
                         </div>
                         <div class="type2">
-                            Type-2:<br />
+                            Type 2:<br />
                             <select id="type2">
                                 <option>None</option>
                                 <option>Normal</option>
@@ -294,7 +295,7 @@ export class Home extends Component {
                                 <option>Fairy</option>
                             </select>
                         </div>
-                        <br />InternalName:<br />
+                        <br />Internal Name:<br />
                         <input type="text" id="internalname" />
                         <br />Kind:<br />
                         <input type="text" id="kind" />
