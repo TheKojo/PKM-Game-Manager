@@ -83,8 +83,102 @@ export class Home extends Component {
         else {
             typeTwoForm.value = this.capitalize(typeTwoStr);
         }
-        
 
+        var canvas = document.getElementById('statCanvas');
+        var context = canvas.getContext("2d");
+        context.fillStyle = "#4d5f5c";
+        context.fillRect(0, 0, 250, 140);
+
+        context.fillStyle = "#5b7672";
+        context.fillRect(0, 110, 250, 30);
+
+        context.fillStyle = "#ffffff";
+        context.fillText("HP", 18, 122);
+        context.fillText("ATK", 46, 122);
+        context.fillText("DEF", 76, 122);
+        context.fillText("SPA", 106, 122);
+        context.fillText("SPD", 136, 122);
+        context.fillText("SPE", 166, 122);
+
+        var bst = 0;
+        var stat = this.state.pkmList[pkmIndex].hp;
+        context.fillStyle = this.getBarColor(stat);
+        context.fillRect(20, 110 - (stat / 2), 10, stat / 2);
+        bst = bst + stat;
+
+        stat = this.state.pkmList[pkmIndex].attack;
+        context.fillStyle = this.getBarColor(stat);
+        context.fillRect(50, 110 - (stat / 2), 10, stat / 2);
+        bst = bst + stat;
+
+        stat = this.state.pkmList[pkmIndex].defense;
+        context.fillStyle = this.getBarColor(stat);
+        context.fillRect(80, 110 - (stat / 2), 10, stat / 2);
+        bst = bst + stat;
+
+        stat = this.state.pkmList[pkmIndex].spAtk;
+        context.fillStyle = this.getBarColor(stat);
+        context.fillRect(110, 110 - (stat / 2), 10, stat / 2);
+        bst = bst + stat;
+
+        stat = this.state.pkmList[pkmIndex].spDef;
+        context.fillStyle = this.getBarColor(stat);
+        context.fillRect(140, 110 - (stat / 2), 10, stat / 2);
+        bst = bst + stat;
+
+        stat = this.state.pkmList[pkmIndex].speed;
+        context.fillStyle = this.getBarColor(stat);
+        context.fillRect(170, 110 - (stat / 2), 10, stat / 2);
+        bst = bst + stat;
+
+        context.fillStyle = this.getBarColor(bst/6);
+        context.fillText("BST: "+bst, 85, 135);
+    }
+
+    updateBar() {
+
+    }
+
+    getBarColor(statVal) {
+        if (statVal < 20) {
+            return "#c1222e";
+        }
+        else if (statVal < 40) {
+            return "#f2222e";
+        }
+        else if (statVal < 60) {
+            return "#f25c2e";
+        }
+        else if (statVal < 70) {
+            return "#f2972e";
+        }
+        else if (statVal < 80) {
+            return "#f2c12e";
+        }
+        else if (statVal < 90) {
+            return "#bfd943";
+        }
+        else if (statVal < 100) {
+            return "#a9d943";
+        }
+        else if (statVal < 110) {
+            return "#98d943";
+        }
+        else if (statVal < 120) {
+            return "#7bd943";
+        }
+        else if (statVal < 150) {
+            return "#68d943";
+        }
+        else if (statVal < 170) {
+            return "#57d958";
+        }
+        else if (statVal < 200) {
+            return "#57d98a";
+        }
+        else {
+            return "#57d9ab";
+        }
     }
 
     capitalize(string) {
@@ -121,73 +215,97 @@ export class Home extends Component {
                 </table>
 
                 <form class="pkminfo">
-                    Name:<br/>
-                    <input id="namebox" type="text" name="pkmname"/>
-                    <br />
-                    <div class="type1">
-                        Type-1:<br />
-                        <select id="type1">
-                            <option>Normal</option>
-                            <option>Fighting</option>
-                            <option>Flying</option>
-                            <option>Poison</option>
-                            <option>Ground</option>
-                            <option>Rock</option>
-                            <option>Bug</option>
-                            <option>Ghost</option>
-                            <option>Steel</option>
-                            <option>Fire</option>
-                            <option>Water</option>
-                            <option>Grass</option>
-                            <option>Electric</option>
-                            <option>Psychic</option>
-                            <option>Ice</option>
-                            <option>Dragon</option>
-                            <option>Dark</option>
-                            <option>Fairy</option>
-                        </select>
-
+                    <div class="sectionOne">
+                        Name:<br />
+                        <input id="namebox" type="text" name="pkmname" />
+                        <br />
+                        <div class="type1">
+                            Type-1:<br />
+                            <select id="type1">
+                                <option>Normal</option>
+                                <option>Fighting</option>
+                                <option>Flying</option>
+                                <option>Poison</option>
+                                <option>Ground</option>
+                                <option>Rock</option>
+                                <option>Bug</option>
+                                <option>Ghost</option>
+                                <option>Steel</option>
+                                <option>Fire</option>
+                                <option>Water</option>
+                                <option>Grass</option>
+                                <option>Electric</option>
+                                <option>Psychic</option>
+                                <option>Ice</option>
+                                <option>Dragon</option>
+                                <option>Dark</option>
+                                <option>Fairy</option>
+                            </select>
+                        </div>
                         <div class="type2">
                             Type-2:<br />
                             <select id="type2">
-                            <option>None</option>
-                            <option>Normal</option>
-                            <option>Fighting</option>
-                            <option>Flying</option>
-                            <option>Poison</option>
-                            <option>Ground</option>
-                            <option>Rock</option>
-                            <option>Bug</option>
-                            <option>Ghost</option>
-                            <option>Steel</option>
-                            <option>Fire</option>
-                            <option>Water</option>
-                            <option>Grass</option>
-                            <option>Electric</option>
-                            <option>Psychic</option>
-                            <option>Ice</option>
-                            <option>Dragon</option>
-                            <option>Dark</option>
-                            <option>Fairy</option>
+                                <option>None</option>
+                                <option>Normal</option>
+                                <option>Fighting</option>
+                                <option>Flying</option>
+                                <option>Poison</option>
+                                <option>Ground</option>
+                                <option>Rock</option>
+                                <option>Bug</option>
+                                <option>Ghost</option>
+                                <option>Steel</option>
+                                <option>Fire</option>
+                                <option>Water</option>
+                                <option>Grass</option>
+                                <option>Electric</option>
+                                <option>Psychic</option>
+                                <option>Ice</option>
+                                <option>Dragon</option>
+                                <option>Dark</option>
+                                <option>Fairy</option>
                             </select>
                         </div>
+                        <br />InternalName:<br />
+                        <input type="text" id="internalname" />
+                    </div> 
+
+                    
+                    <div class="sectionTwo">
+                        <div class="stat">
+                            HP:<br />
+                            <input type="number" id="hp" min="1" max="255" />
+                        </div>
+
+                        <div class="stat">
+                            Attack:<br />
+                            <input type="number" id="attack" min="1" max="255" />
+                        </div>
+
+                        <div class="stat">
+                            Defense:<br />
+                            <input type="number" id="defense" min="1" max="255" />
+                        </div>
+
+                        <div class="stat">
+                            Sp. Atk:<br />
+                            <input type="number" id="spatk" min="1" max="255" />
+                        </div>
+
+                        <div class="stat">
+                            Sp. Def:<br />
+                            <input type="number" id="spdef" min="1" max="255" />
+                        </div>
+
+                        <div class="stat">
+                            Speed:<br />
+                            <input type="number" id="speed" min="1" max="255" />
+                        </div>
                     </div>
-                    <br />InternalName:<br />
-                    <input type="text" id="internalname" />
-                    <div class="hp">
-                        <br />HP:<br />
-                        <input type="number" id="hp" min="1" max="255"/>
-                        <br />Attack:<br />
-                        <input type="number" id="attack" min="1" max="255"/>
-                        <br />Defense:<br />
-                        <input type="number" id="defense" min="1" max="255" />
-                        <br />Sp. Attack:<br />
-                        <input type="number" id="spatk" min="1" max="255" />
-                        <br />Sp. Defense:<br />
-                        <input type="number" id="spdef" min="1" max="255" />
-                        <br />Speed:<br />
-                        <input type="number" id="speed" min="1" max="255" />
-                    </div>
+
+                    <canvas id="statCanvas" width="202" height="140">
+                    </canvas>
+
                     <br />Gender Rate:<br />
                     <select id="genderrate">
                         <option>AlwaysMale</option>

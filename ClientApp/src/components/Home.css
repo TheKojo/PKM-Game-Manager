@@ -22,27 +22,54 @@ form.searchb {
     position: absolute;
     left: 250px;
     float: left;
+    width: 500px;
     padding-left: 20px;
-    padding-right: 250px;
+    padding-right: 20px;
     padding-bottom: 20px;
     padding-top: 20px;
     border-radius: 15px;
     /*background-color: #0099b5;*/
-    background-color: #688c87
+    background-color: #688c87;
+    clear:both;
+    
 }
 
-.type1{
-    position:relative;
+.sectionOne {
+    position: relative;
+    left: 270px;
+    width: 210px;
+}
+
+.type1 {
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    float: left;
 }
 
 .type2 {
-    position: absolute;
-    bottom:0px;
-    right:20px;
+    padding: 5px;
+    float: left;
 }
 
-.hp {
+.sectionTwo {
     position: relative;
+    width: 500px;
+    height:70px;
+    right:10px;
+    
+
+}
+
+.stat {
+    float:left;
+    padding: 5px;
+}
+
+canvas {
+    position: relative;
+    left: 130px;
+    border-radius: 10px;
 }
 
 .egggroup1 {
@@ -143,3 +170,4 @@ tbody:after {
     width: 200px;
     height: 4em;
 }
+
