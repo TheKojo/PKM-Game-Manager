@@ -14,6 +14,10 @@ namespace pkm_game_manager.Models
 
         public virtual DbSet<Pokemon> Pokemon { get; set; }
 
+        public virtual DbSet<Move> Move { get; set; }
+
+        public virtual DbSet<PokemonMove> PokemonMove { get; set; }
+
         /*public PkmContext(string connectionString)
         {
             this.ConnectionString = connectionString;
@@ -73,7 +77,7 @@ namespace pkm_game_manager.Models
                     cmd.Parameters.AddWithValue("@EVSpeed", pkmList[i].Speed);
                     cmd.Parameters.AddWithValue("@Rareness", pkmList[i].Rareness);
                     cmd.Parameters.AddWithValue("@Happiness", pkmList[i].Happiness);
-                    cmd.Parameters.AddWithValue("@Ability", pkmList[i].Ability);
+                    cmd.Parameters.AddWithValue("@Ability", pkmList[i].Ability1);
                     cmd.Parameters.AddWithValue("@EggGroup1", pkmList[i].EggGroup1);
                     cmd.Parameters.AddWithValue("@EggGroup2", pkmList[i].EggGroup2);
                     cmd.Parameters.AddWithValue("@HatchSteps", pkmList[i].HatchSteps);
@@ -104,9 +108,12 @@ namespace pkm_game_manager.Models
             }
         }
 
-            public List<Pokemon> parsePBS(string pbs)
+
+
+        public List<Pokemon> parsePBS(string pbs)
         {
             List<Pokemon> pkmList = new List<Pokemon>();
+            //List<PokemonMove> pkmMoveList = new List<PokemonMove>;
 
             while (pbs.Length>0)
             {
@@ -117,7 +124,6 @@ namespace pkm_game_manager.Models
                 string id = pbs.Substring(pbs.IndexOf("[") + 1, pbs.IndexOf("]")-1);
                 pkm.DexId = Int32.Parse(id);
                 pbs = pbs.Substring(pbs.IndexOf("["));
-
 
                 //Name
                 pbs = pbs.Substring(pbs.IndexOf("Name"));
@@ -229,8 +235,118 @@ namespace pkm_game_manager.Models
                 string happiness = pbs.Substring(pbs.IndexOf("=") + 1, (pbs.IndexOf("\r\n") - 1 - pbs.IndexOf("=")));
                 pkm.Happiness = Int32.Parse(happiness);
 
-                pkm.Height = 1.2;
-                pkm.Weight = 1.2;
+                //Ability1 & 2
+                pbs = pbs.Substring(pbs.IndexOf("Abilities"));
+                pbs = pbs.Substring(pbs.IndexOf("=") + 1);
+                string ability1 = "";
+                if (pbs.IndexOf("\r\n") > pbs.IndexOf(",") && pbs.IndexOf(",") != -1)
+                {
+                    ability1 = pbs.Substring(0, pbs.IndexOf(","));
+                    pkm.Ability1 = ability1;
+                    pbs = pbs.Substring(pbs.IndexOf(",") + 1);
+                    string ability2 = pbs.Substring(0, pbs.IndexOf("\r\n"));
+                    pkm.Ability2 = ability2;
+                }
+                else
+                {
+                    ability1 = pbs.Substring(0, pbs.IndexOf("\r\n"));
+                    pkm.EggGroup1 = ability1;
+                }
+                
+                pkm.Ability1 = ability1;
+
+
+                /*if (pbs.IndexOf("HiddenAbility=") < pbs.IndexOf("Moves="))
+                {
+                    pbs = pbs.Substring(pbs.IndexOf("HiddenAbility"));
+                }*/
+
+
+                //Moves
+                pbs = pbs.Substring(pbs.IndexOf("Moves"));
+                pbs = pbs.Substring(pbs.IndexOf("=") + 1);
+
+                while (pbs.IndexOf("\n") != 0)
+                {
+                    PokemonMove move = new PokemonMove();
+                    string lv = pbs.Substring(0, pbs.IndexOf(","));
+                    move.Level = Int32.Parse(lv);
+
+                    pbs = pbs.Substring(pbs.IndexOf(",")+1);
+
+                    int nextTokenPos = Math.Min(pbs.IndexOf(","), pbs.IndexOf("\r\n"));
+                    if (pbs.IndexOf(",") == -1){
+                        nextTokenPos = pbs.IndexOf("\r\n");
+                    }
+                        string moveName = pbs.Substring(0, nextTokenPos);
+                    move.MoveId = moveName;
+                    move.PokemonId = pkmList.Count()+1;
+                    pbs = pbs.Substring(nextTokenPos+1);
+                     
+                    PokemonMove.Add(move);
+                }
+
+                //Egg Group 1 & 2
+                pbs = pbs.Substring(pbs.IndexOf("Compatibility"));
+                pbs = pbs.Substring(pbs.IndexOf("=")+1);
+                string egg1 = "";
+                if ((pbs.IndexOf("\r\n") > pbs.IndexOf(",")) && pbs.IndexOf(",") != -1)
+                {
+                    egg1 = pbs.Substring(0, pbs.IndexOf(","));
+                    pkm.EggGroup1 = egg1;
+                    pbs = pbs.Substring(pbs.IndexOf(",") + 1);
+                    string egg2 = pbs.Substring(0, pbs.IndexOf("\r\n"));
+                    pkm.EggGroup2 = egg2;
+                }
+                else
+                {
+                    egg1 = pbs.Substring(0, pbs.IndexOf("\r\n"));
+                    pkm.EggGroup1 = egg1;
+                }
+
+                //HatchSteps
+                pbs = pbs.Substring(pbs.IndexOf("StepsToHatch"));
+                pbs = pbs.Substring(pbs.IndexOf("=") + 1);
+                string hatchSteps = pbs.Substring(0, pbs.IndexOf("\r\n"));
+                pkm.HatchSteps = Int32.Parse(hatchSteps);
+
+                //Height
+                pbs = pbs.Substring(pbs.IndexOf("Height"));
+                pbs = pbs.Substring(pbs.IndexOf("=") + 1);
+                string height = pbs.Substring(0, pbs.IndexOf("\r\n"));
+                pkm.Height = Double.Parse(height);
+
+                //Weight
+                pbs = pbs.Substring(pbs.IndexOf("Weight"));
+                pbs = pbs.Substring(pbs.IndexOf("=") + 1);
+                string weight = pbs.Substring(0, pbs.IndexOf("\r\n"));
+                pkm.Height = Double.Parse(weight);
+
+                //Color
+                pbs = pbs.Substring(pbs.IndexOf("Color"));
+                pbs = pbs.Substring(pbs.IndexOf("=") + 1);
+                pkm.Color = pbs.Substring(0, pbs.IndexOf("\r\n"));
+
+                //Shape
+                pbs = pbs.Substring(pbs.IndexOf("Shape"));
+                pbs = pbs.Substring(pbs.IndexOf("=") + 1);
+                pkm.Shape = Int32.Parse(pbs.Substring(0, pbs.IndexOf("\r\n")));
+
+                //Habitat
+                pbs = pbs.Substring(pbs.IndexOf("Habitat"));
+                pbs = pbs.Substring(pbs.IndexOf("=") + 1);
+                pkm.Habitat = pbs.Substring(0, pbs.IndexOf("\r\n"));
+
+                //Kind
+                pbs = pbs.Substring(pbs.IndexOf("Kind"));
+                pbs = pbs.Substring(pbs.IndexOf("=") + 1);
+                pkm.Kind = pbs.Substring(0, pbs.IndexOf("\r\n"));
+
+                //Pokedex
+                pbs = pbs.Substring(pbs.IndexOf("Pokedex"));
+                pbs = pbs.Substring(pbs.IndexOf("=") + 1);
+                //pkm.DexEntry = pbs.Substring(0, pbs.IndexOf("\r\n"));
+
 
                 pkmList.Add(pkm);
                 if (pbs.IndexOf("[") == -1)
@@ -242,6 +358,86 @@ namespace pkm_game_manager.Models
 
             return pkmList;
         }
+
+        public void addMoves(string pbs)
+        {
+            List<Move> moveList = parseMoves(pbs);
+            for (int i = 0; i < moveList.Count; i++)
+            {
+                Move.Add(moveList[i]);
+                SaveChanges();
+            }
+        }
+
+        public List<Move> parseMoves(string pbs)
+        {
+            List<Move> moveList = new List<Move>();
+
+            while (pbs.Length > 0)
+            {
+                Move move = new Move();
+
+                //Name
+                pbs = pbs.Substring(pbs.IndexOf(",") + 1);
+                move.MoveId = pbs.Substring(0, pbs.IndexOf(","));
+                pbs = pbs.Substring(pbs.IndexOf(",") + 1);
+                move.Name = pbs.Substring(0, pbs.IndexOf(","));
+                 
+                //BP
+                pbs = pbs.Substring(pbs.IndexOf(",") + 1);
+                pbs = pbs.Substring(pbs.IndexOf(",") + 1);
+                string bpStr = pbs.Substring(0, pbs.IndexOf(","));
+                move.BP = Int32.Parse(bpStr);
+
+                //Type
+                pbs = pbs.Substring(pbs.IndexOf(",") + 1);
+                move.Type = pbs.Substring(0, pbs.IndexOf(","));
+
+                //Category
+                pbs = pbs.Substring(pbs.IndexOf(",") + 1);
+                move.Category = pbs.Substring(0, pbs.IndexOf(","));
+
+                //Accuracy
+                pbs = pbs.Substring(pbs.IndexOf(",") + 1);
+                move.Accuracy = Int32.Parse(pbs.Substring(0, pbs.IndexOf(",")));
+
+                //PP
+                pbs = pbs.Substring(pbs.IndexOf(",") + 1);
+                move.PP = Int32.Parse(pbs.Substring(0, pbs.IndexOf(",")));
+
+                if (pbs.IndexOf("\r\n") == -1){
+                    pbs = "";
+                }
+                else{
+                    pbs = pbs.Substring(pbs.IndexOf("\r\n") + 1);
+                }
+                
+                moveList.Add(move);
+            }
+
+            return moveList;
+        }
+
+        public void savePokemon(Pokemon pkm)
+        {
+            Pokemon.Update(pkm);
+            SaveChanges();
+        }
+
+        public List<MovePokemonMove> getMoveList (int pkmId)
+        {
+            var moveList = Move.Join(PokemonMove,
+                m => m.MoveId,
+                pm => pm.MoveId,
+                (m, pm) => new MovePokemonMove { MoveId = m.MoveId, Name = m.Name, Level = pm.Level,
+                    Type = m.Type, Category = m.Category,
+                    BP = m.BP, Accuracy = m.Accuracy, PP = m.PP, PokemonId = pm.PokemonId})
+                .Where(p => p.PokemonId == pkmId).OrderBy(l => l.Level).ToList();
+            //List<PokemonMove> moveList = (PokemonMove.Where(p => p.PokemonId == pkmId)).OrderBy(l => l.Level).ToList();
+
+            return moveList;
+        }
+
 
         public string getName(int id)
         {

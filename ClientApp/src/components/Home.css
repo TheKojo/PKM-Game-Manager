@@ -22,7 +22,7 @@ form.searchb {
     position: absolute;
     left: 250px;
     float: left;
-    width: 500px;
+    width: 700px;
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 20px;
@@ -70,6 +70,21 @@ form.searchb {
     left: 75px;
 }
 
+.sectionSix {
+    position: relative;
+    right: 30px;
+    top: 90px;
+    float: left;
+}
+
+input[type=submit] {
+    color: #4d5f5c;
+    background-color: #8abdb7;
+    border: none;
+    padding: 15px 32px;
+    margin: 4px 10px;
+}
+
 .rate {
     position:relative;
     float: left;
@@ -107,7 +122,7 @@ thead, tbody {
     color: #4d5f5c;
 }
 
-tbody {
+tbody.pkmlist {
     max-height: 450px;
     overflow: auto;
     width: 200px;
@@ -119,6 +134,39 @@ td, th {
     text-align: left;
     padding: 8px;
 }
+
+
+/*Moves*/
+thead.movelist {
+    display: block;
+    color: #4d5f5c;
+}
+
+tbody.movelist {
+    max-height: 450px;
+    overflow: auto;
+    width: 600px;
+    display: block;
+    color: #4d5f5c;
+}
+
+
+th.movelist {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 16px;
+    color: #bcd4d1
+}
+
+td.movelist {
+    border: 1px solid #dddddd;
+    background-color: #8abdb7;
+    text-align: left;
+    padding-right: 16px;
+    padding-left: 16px;
+}
+
+/*****/
 
 tr:hover {
     /*background-color: #045fac;*/
@@ -167,7 +215,7 @@ select,option {
     background: #4d5f5c;
 }
 
-tbody:after {
+tbody.pkmlist:after {
     content: "";
     position: absolute;
     z-index: 1;

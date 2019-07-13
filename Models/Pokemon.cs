@@ -55,7 +55,11 @@ namespace pkm_game_manager.Models
 
         public int Happiness { get; set; }
 
-        public string Ability { get; set; }
+        public string Ability1 { get; set; }
+
+        public string Ability2 { get; set; }
+
+        public string HiddenAbility { get; set; }
 
         public string EggGroup1 { get; set; }
 

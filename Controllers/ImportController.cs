@@ -35,8 +35,17 @@ namespace pkm_game_manager.Controllers
         [Route("api/Import/SubmitPBS")]
         public IActionResult SubmitPBS(PBSPkm pbsText)
         {
+            //info will pass after making name attribute in form same as the model column names
             PkmContext context = HttpContext.RequestServices.GetService(typeof(pkm_game_manager.Models.PkmContext)) as PkmContext;
-            context.addPBStest(pbsText.text);
+            if (pbsText.PBSType.Equals("Pokemon"))
+            {
+                context.addPBStest(pbsText.Text);
+            }
+            else if (pbsText.PBSType.Equals("Move"))
+            {
+                context.addMoves(pbsText.Text);
+            }
+            
             //return 0;
             return View();
         }

@@ -7,6 +7,8 @@
     padding-bottom: 10px;
 }
 
-textarea{
+textarea {
     resize: none;
+    color: #8abdb7;
+    background-color: #4d5f5c;
 }

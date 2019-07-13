@@ -18,6 +18,24 @@ namespace pkm_game_manager.Controllers
             return pkmList;
         }
 
+        [HttpPost]
+        [Route("api/Home/Moves")]
+        public IEnumerable<MovePokemonMove> Moves(Pokemon pkm)
+        {
+            PkmContext context = HttpContext.RequestServices.GetService(typeof(pkm_game_manager.Models.PkmContext)) as PkmContext;
+            IEnumerable<MovePokemonMove> moveList = context.getMoveList(pkm.PokemonId);
+            return moveList;
+        }
+
+        [HttpPost]
+        [Route("api/Home/SavePkm")]
+        public IActionResult SubmitPBS(Pokemon pkm)
+        {
+            PkmContext context = HttpContext.RequestServices.GetService(typeof(pkm_game_manager.Models.PkmContext)) as PkmContext;
+            context.savePokemon(pkm);
+            return View();
+        }
+
     }
 }
  

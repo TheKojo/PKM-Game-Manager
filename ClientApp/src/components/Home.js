@@ -13,11 +13,15 @@ export class Home extends Component {
         this.state = {
             pkmList: [],
             isLoading: false,
+            curIndex: 0,
+            moveList: []
         };
 
         this.changeInfo = this.changeInfo.bind(this);
         this.capitalize = this.capitalize.bind(this);
         this.checkTop = this.checkTop.bind(this);
+        this.savePkm = this.savePkm.bind(this);
+        this.getMoveList = this.getMoveList.bind(this);
 
     }
 
@@ -52,6 +56,7 @@ export class Home extends Component {
         
 
         var pkmIndex = pkmId - 1;//pkmListForm.selectedIndex;
+        this.state.curIndex = pkmId;
         
         table.rows[pkmId].classList.add("selected");
 
@@ -161,7 +166,7 @@ export class Home extends Component {
             requestAnimationFrame(() => { this.updateBar(prog + 5, pkmIndex) });
         }
         
-        
+        this.getMoveList();
     }
 
     getBarColor(statVal) {
@@ -210,6 +215,29 @@ export class Home extends Component {
         return string.charAt(0).toUpperCase() + (string.slice(1)).toLowerCase();
     }
 
+
+    getMoveList() {
+        const data = new FormData();
+        data.set('pokemonid', this.state.curIndex);
+        fetch('api/Home/Moves', {
+            method: 'POST',
+            body: data
+        }).then(response => response.json())
+            .then(data => this.setState({ moveList: data }));
+    }
+
+    savePkm(event) {
+        const data = new FormData(event.target);
+        data.set('pokemonid', this.state.curIndex);
+        fetch('api/Home/SavePkm', {
+            method: 'POST',
+            body: data
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                this.props.history.push("/import");
+            })
+    }
+
     render() {
         const { pkmList, isLoading } = this.state;
         
@@ -231,7 +259,7 @@ export class Home extends Component {
                             <th>Pokemon</th>
                         </tr>
                     </thead>
-                    <tbody id="tbodyid" onScroll={this.checkTop}>
+                    <tbody id="tbodyid" class="pkmlist" onScroll={this.checkTop}>
                         {this.state.pkmList.map(pkm => <tr key={pkm.pokemonId} onClick={() => this.changeInfo(pkm.pokemonId)}>
                             <td><img src={`data:image/jpeg;base64,${pkm.icon}`} /></td>
                             <td>{pkm.name}</td>
@@ -240,7 +268,7 @@ export class Home extends Component {
                     </tbody>
                 </table>
 
-                <form class="pkminfo">
+                <form class="pkminfo" onSubmit={this.savePkm}>
                     <div>
                         <img id="artwork" />
                     </div>
@@ -298,7 +326,7 @@ export class Home extends Component {
                         <br />Internal Name:<br />
                         <input type="text" id="internalname" />
                         <br />Kind:<br />
-                        <input type="text" id="kind" />
+                        <input type="text" id="kind" name="kind"/>
                     </div> 
 
                     
@@ -369,6 +397,31 @@ export class Home extends Component {
                         </div>
                     </div>
 
+                    <div class="sectionMoves">
+                        <thead class="movelist">
+                            <tr>
+                            <th class="movelist">Level</th>
+                            <th class="movelist">Name</th>
+                            <th class="movelist">Type</th>
+                            <th class="movelist">Category</th>
+                            <th class="movelist">Power</th>
+                            <th class="movelist">Accuracy</th>
+                            <th class="movelist">PP</th>
+                            </tr>
+                        </thead>
+                        <tbody class="movelist" onScroll={this.checkTop}>
+                            {this.state.moveList.map(move => <tr key={move.level} >
+                                <td class="movelist">{move.level}</td>
+                                <td class="movelist">{move.name}</td>
+                                <td class="movelist">{move.type}</td>
+                                <td class="movelist">{move.category}</td>
+                                <td class="movelist">{move.bp}</td>
+                                <td class="movelist">{move.accuracy}%</td>
+                                <td class="movelist">{move.pp}</td>
+                            </tr>
+                            )}
+                        </tbody>
+                    </div>
 
                     <div class="sectionFour">
                         <div class="rate">
@@ -442,12 +495,17 @@ export class Home extends Component {
                             </select>
                         </div>
                     </div>
-                    
+                    <div class="sectionSix">
+                        <input type="submit" value="Save" />
+                        <input type="submit" value="Export" />
+                    </div>
                 </form>
             </div>    
 
         );
     }
+
+
 
 }
 

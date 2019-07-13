@@ -9,6 +9,8 @@ namespace pkm_game_manager.Models
     {
         public int Id { get; set; }
 
-        public string text { get; set; }
+        public string PBSType { get; set; }
+
+        public string Text { get; set; }
     }
 }
