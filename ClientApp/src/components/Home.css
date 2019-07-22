@@ -145,7 +145,7 @@ thead.movelist {
 tbody.movelist {
     max-height: 450px;
     overflow: auto;
-    width: 600px;
+    width: 700px;
     display: block;
     color: #4d5f5c;
 }
@@ -166,12 +166,29 @@ td.movelist {
     padding-left: 16px;
 }
 
-/*****/
+.deleteMove {
+    background-color: #f08c81;
+    border: none;
+    color: white;
+    border-radius: 15px;
+    opacity: 1;
 
+}
+
+.movelistX {
+    opacity: 0;
+}
+
+
+/*****/
 tr:hover {
     /*background-color: #045fac;*/
     background-color: #688c87;
     color: #ffffff;
+}
+
+tr:hover > .movelistX {
+    opacity: 1;
 }
 
 .selected {

@@ -411,6 +411,7 @@ export class Home extends Component {
                         </thead>
                         <tbody class="movelist" onScroll={this.checkTop}>
                             {this.state.moveList.map(move => <tr key={move.level} >
+                                <td class="movelistX"><button class="deleteMove">x</button></td>
                                 <td class="movelist">{move.level}</td>
                                 <td class="movelist">{move.name}</td>
                                 <td class="movelist">{move.type}</td>
@@ -418,6 +419,7 @@ export class Home extends Component {
                                 <td class="movelist">{move.bp}</td>
                                 <td class="movelist">{move.accuracy}%</td>
                                 <td class="movelist">{move.pp}</td>
+
                             </tr>
                             )}
                         </tbody>
