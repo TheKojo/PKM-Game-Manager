@@ -30,8 +30,29 @@ form.searchb {
     border-radius: 15px;
     /*background-color: #0099b5;*/
     background-color: #688c87;
-    clear:both;
-    
+    clear:both;    
+}
+
+.buttonTab {
+    background-color: #5b7672;
+    border: none;
+    position: relative;
+    margin-right: 1px;
+    margin-left: 1px;
+    bottom: 62px;
+    padding: 10px;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.buttonTabSelected {
+    background-color: #688c87;
+    border: none;
+    position: relative;
+    margin-right: 1px;
+    margin-left: 1px;
+    bottom: 62px;
+    padding: 10px;
+    border-radius: 10px 10px 0px 0px;
 }
 
 .sectionOne {
@@ -75,6 +96,21 @@ form.searchb {
     right: 30px;
     top: 90px;
     float: left;
+}
+
+input[type=text], input[type=number] {
+    /*background-color: #165059;*/
+    background-color: #4d5f5c;
+    border: none;
+    padding: 5px;
+}
+
+
+select, option {
+    /*background-color: #165059;*/
+    background-color: #4d5f5c;
+    border: none;
+    padding: 5px;
 }
 
 input[type=submit] {
@@ -180,6 +216,8 @@ td.movelist {
 }
 
 
+
+
 /*****/
 tr:hover {
     /*background-color: #045fac;*/
@@ -197,20 +235,7 @@ tr:hover > .movelistX {
     color: #ffffff;
 }
 
-input[type=text], input[type=number] {
-    /*background-color: #165059;*/
-    background-color: #4d5f5c;
-    border: none;
-    padding: 5px;
-}
 
-
-select,option {
-    /*background-color: #165059;*/
-    background-color: #4d5f5c;
-    border: none;
-    padding: 5px;
-}
 
 
 ::-webkit-scrollbar {

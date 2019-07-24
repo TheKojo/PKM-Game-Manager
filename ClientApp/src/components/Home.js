@@ -60,6 +60,9 @@ export class Home extends Component {
         
         table.rows[pkmId].classList.add("selected");
 
+        var selTab = document.getElementById('info');
+        selTab.classList.add("buttonTabSelected");
+
         var artwork = document.getElementById('artwork');
         artwork.src = 'data:image/png;base64,' + this.state.pkmList[pkmIndex].artwork;
 
@@ -269,6 +272,9 @@ export class Home extends Component {
                 </table>
 
                 <form class="pkminfo" onSubmit={this.savePkm}>
+                    <button type="button" class="buttonTab" id="info">Info</button>
+                    <button type="button" class="buttonTab" id="art">Art</button>
+                    <button type="button" class="buttonTab" id="export">Export</button>
                     <div>
                         <img id="artwork" />
                     </div>
@@ -411,7 +417,7 @@ export class Home extends Component {
                         </thead>
                         <tbody class="movelist" onScroll={this.checkTop}>
                             {this.state.moveList.map(move => <tr key={move.level} >
-                                <td class="movelistX"><button class="deleteMove">x</button></td>
+                                <td class="movelistX"><button type="button" class="deleteMove" onClick={this.checkTop}>x</button></td>
                                 <td class="movelist">{move.level}</td>
                                 <td class="movelist">{move.name}</td>
                                 <td class="movelist">{move.type}</td>
@@ -499,7 +505,6 @@ export class Home extends Component {
                     </div>
                     <div class="sectionSix">
                         <input type="submit" value="Save" />
-                        <input type="submit" value="Export" />
                     </div>
                 </form>
             </div>    
