@@ -5,6 +5,6 @@ Import PBS text file and sprites/artwork into SQL Server and then browse through
 
 ![alt text](https://i.imgur.com/tx5mFu7.gif)
 
-This data will then be able to be exported for use in fan games.
+This data will then be able to be exported for use in fan games.  
 ![alt text](https://i.imgur.com/A2IFhgg.gif)
 ![alt text](https://i.imgur.com/no4OiXM.gif)
