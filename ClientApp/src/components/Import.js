@@ -34,7 +34,7 @@ export class Import extends Component {
                         <option>Pokemon</option>
                         <option>Move</option>
                     </select>
-
+                    <br />
                     <textarea rows="15" cols="80" name="text"/>
                     <br />
                     <input type="submit" value="Import" />

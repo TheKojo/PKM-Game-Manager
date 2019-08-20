@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace pkm_game_manager.Models
 {
@@ -96,5 +98,17 @@ namespace pkm_game_manager.Models
         public byte[] BackSprite { get; set; }
 
         public byte[] Artwork { get; set; }
+
+        [NotMapped]
+        public string IconStr { get; set; }
+
+        [NotMapped]
+        public string ArtworkStr { get; set; }
+
+        [NotMapped]
+        public string FrontSpriteStr { get; set; }
+
+        [NotMapped]
+        public string BackSpriteStr { get; set; }
     }
 }

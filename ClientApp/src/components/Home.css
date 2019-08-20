@@ -30,7 +30,7 @@ form.searchb {
     border-radius: 15px;
     /*background-color: #0099b5;*/
     background-color: #688c87;
-    clear:both;    
+    clear: both;
 }
 
 .buttonTab {
@@ -53,6 +53,10 @@ form.searchb {
     bottom: 62px;
     padding: 10px;
     border-radius: 10px 10px 0px 0px;
+}
+
+.buttonTab:focus {
+    outline: none;
 }
 
 .sectionOne {
@@ -98,7 +102,7 @@ form.searchb {
     float: left;
 }
 
-input[type=text], input[type=number] {
+input[type=text], input[type=number], input[type=file] {
     /*background-color: #165059;*/
     background-color: #4d5f5c;
     border: none;
@@ -118,6 +122,13 @@ input[type=submit] {
     background-color: #8abdb7;
     border: none;
     padding: 15px 32px;
+    margin: 4px 10px;
+}
+
+button.upload {
+    color: #4d5f5c;
+    background-color: #8abdb7;
+    border: none;
     margin: 4px 10px;
 }
 

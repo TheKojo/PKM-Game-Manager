@@ -420,6 +420,39 @@ namespace pkm_game_manager.Models
 
         public void savePokemon(Pokemon pkm)
         {
+            if (pkm.IconStr != null)
+            {
+                string imgStr = pkm.IconStr;
+                string bytes = imgStr.Substring(imgStr.IndexOf(",") + 1);
+                pkm.Icon = Convert.FromBase64String(bytes);
+            }
+            if (pkm.ArtworkStr != null)
+            {
+                string imgStr = pkm.ArtworkStr;
+                string bytes = imgStr.Substring(imgStr.IndexOf(",") + 1);
+                pkm.Artwork = Convert.FromBase64String(bytes);
+            }
+            if (pkm.FrontSpriteStr != null)
+            {
+                string imgStr = pkm.FrontSpriteStr;
+                string bytes = imgStr.Substring(imgStr.IndexOf(",") + 1);
+                pkm.FrontSprite = Convert.FromBase64String(bytes);
+            }
+            if (pkm.BackSpriteStr != null)
+            {
+                string imgStr = pkm.BackSpriteStr;
+                string bytes = imgStr.Substring(imgStr.IndexOf(",") + 1);
+                pkm.BackSprite = Convert.FromBase64String(bytes);
+            }
+            if (pkm.Type1 != null)
+            {
+                pkm.Type1 = pkm.Type1.ToUpper();
+            }
+            if (pkm.Type2 != null)
+            {
+                pkm.Type2 = pkm.Type2.ToUpper();
+            }
+
             Pokemon.Update(pkm);
             SaveChanges();
         }

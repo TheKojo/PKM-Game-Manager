@@ -12,9 +12,21 @@ export class Home extends Component {
         super();
         this.state = {
             pkmList: [],
-            isLoading: false,
-            curIndex: 0,
-            moveList: []
+            isLoading: true,
+            curIndex: 1,
+            moveList: [],
+            tab: 0,
+            name: '', internalName: '',
+            type1: '', type2: '',
+            hp: 0, attack: 0, defense: 0, spatk: 0, spdef: 0, speed: 0,
+            evhp: 0, evAttack: 0, evDefense: 0, evSpAtk: 0, evSpDef: 0, evSpeed: 0,
+            kind: '',
+            genderRate: '', growthRate: '',
+            eggGroup1: '', eggGroup2: '',
+            artwork: '', artworkStr: '',
+            icon: '', iconStr: '',
+            frontSprite: '', frontSpriteStr: '',
+            backSprite: '', backSpriteStr: ''
         };
 
         this.changeInfo = this.changeInfo.bind(this);
@@ -22,13 +34,51 @@ export class Home extends Component {
         this.checkTop = this.checkTop.bind(this);
         this.savePkm = this.savePkm.bind(this);
         this.getMoveList = this.getMoveList.bind(this);
-
+        this.changeTab = this.changeTab.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     componentDidMount() {
         fetch('api/Home/Index')
             .then(response => response.json())
-            .then(data => this.setState({ pkmList: data, isLoading: false }));
+            .then(data => this.setState({
+                pkmList: data, isLoading: false /*curIndex: 1,
+                name: data[0].name, internalName: data[0].internalName,
+                type1: data[0].type1, type2: data[0].type2, kind: data[0].kind,
+                hp: data[0].hp*/
+            }));
+    }
+
+    handleInputChange(event) {
+        let reader = new FileReader();
+        const target = event.target;
+        const name = target.name;
+        var value = target.value;
+
+        reader.onloadend = (event) => {
+            //var arr = new Uint8Array(reader.result);
+            /*this.setState({
+                icon: Array.from(arr)
+            });*/
+
+            var str = reader.result;
+            this.setState({
+                [name]: str
+            });
+        };
+
+        if ((name === "hp" || name === "attack" || name === "defense" || name === "spAtk" || name === "spDef" || name === "speed") && value > 255) {
+            value = 255;
+        }
+        if (name === "iconStr" || name === "artworkStr" || name === "frontSpriteStr" || name === "backSpriteStr") {
+            let file = target.files[0];
+            //reader.readAsArrayBuffer(file);
+            reader.readAsDataURL(file);
+        }
+        else {
+            this.setState({ [name]: value });
+        }
+        
     }
 
     checkTop() {
@@ -43,70 +93,75 @@ export class Home extends Component {
 
     changeInfo(pkmId) {
 
-        var nameBox = document.getElementById('namebox');
-        var internalNameBox = document.getElementById('internalname');
-        var kindBox = document.getElementById('kind');
-        //var pkmListForm = document.getElementById('pkmlist');
-        //var oldIndex = pkmIndex;
         var table = document.getElementById("pkmtable");
         var oldRow = document.getElementsByClassName("selected");
         if (typeof oldRow[0] !== "undefined") {
             oldRow[0].classList.remove("selected");
         }
         
-
-        var pkmIndex = pkmId - 1;//pkmListForm.selectedIndex;
-        this.state.curIndex = pkmId;
+        var pkmIndex = pkmId - 1;
+        const pkmList = this.state.pkmList;
+        const pkm = pkmList[pkmId - 1];
+        const name = pkm.name;
+        const internalName = pkm.internalName;
+        const type1 = this.capitalize(pkm.type1);
+        const type2 = this.capitalize(pkm.type2);
+        const hp = pkm.hp;
+        const attack = pkm.attack;
+        const defense = pkm.defense;
+        const spAtk = pkm.spAtk;
+        const spDef = pkm.spDef;
+        const speed = pkm.speed;
+        const evhp = pkm.evhp;
+        const evAttack = pkm.evAttack;
+        const evDefense = pkm.evDefense;
+        const evSpAtk = pkm.evSpAtk;
+        const evSpDef = pkm.evSpDef;
+        const evSpeed = pkm.evSpeed;
+        const kind = pkm.kind;
+        const growthRate = pkm.growthRate;
+        const genderRate = pkm.genderRate;
+        const eggGroup1 = pkm.eggGroup1;
+        const eggGroup2 = pkm.eggGroup2;
+        const artwork = pkm.artwork;
+        const icon = pkm.icon;
+        const frontSprite = pkm.frontSprite;
+        const backSprite = pkm.backSprite;
+        this.setState({
+            curIndex: pkmId, name: name, internalName: internalName,
+            type1: type1, type2: type2,
+            hp: hp, attack: attack, defense: defense, spAtk: spAtk, spDef: spDef, speed: speed,
+            evhp: evhp, evAttack: evAttack, evDefense: evDefense, evSpAtk: evSpAtk, evSpDef: evSpDef, evSpeed: evSpeed,
+            kind: kind, growthRate: growthRate, genderRate: genderRate,
+            eggGroup1: eggGroup1, eggGroup2: eggGroup2,
+            artwork: artwork, icon: icon, frontSprite: frontSprite, backSprite: backSprite
+        });
         
         table.rows[pkmId].classList.add("selected");
 
         var selTab = document.getElementById('info');
-        selTab.classList.add("buttonTabSelected");
-
-        var artwork = document.getElementById('artwork');
-        artwork.src = 'data:image/png;base64,' + this.state.pkmList[pkmIndex].artwork;
-
-        var hp = document.getElementById('hp');
-        var attack = document.getElementById('attack');
-        var defense = document.getElementById('defense');
-        var spatk = document.getElementById('spatk');
-        var spdef = document.getElementById('spdef');
-        var speed = document.getElementById('speed');
-
-        var evhp = document.getElementById('evhp');
-        var evattack = document.getElementById('evattack');
-        var evdefense = document.getElementById('evdefense');
-        var evspatk = document.getElementById('evspatk');
-        var evspdef = document.getElementById('evspdef');
-        var evspeed = document.getElementById('evspeed');
-
-        nameBox.value = this.state.pkmList[pkmIndex].name;
-        internalNameBox.value = this.state.pkmList[pkmIndex].internalName;
-        kindBox.value = this.state.pkmList[pkmIndex].kind;
-        hp.value = this.state.pkmList[pkmIndex].hp;
-        attack.value = this.state.pkmList[pkmIndex].attack;
-        defense.value = this.state.pkmList[pkmIndex].defense;
-        spatk.value = this.state.pkmList[pkmIndex].spAtk;
-        spdef.value = this.state.pkmList[pkmIndex].spDef;
-        speed.value = this.state.pkmList[pkmIndex].speed;
-        evhp.value = this.state.pkmList[pkmIndex].evhp;
-        evattack.value= this.state.pkmList[pkmIndex].evAttack;
-        evdefense.value = this.state.pkmList[pkmIndex].evDefense;
-        evspatk.value = this.state.pkmList[pkmIndex].evSpAtk;
-        evspdef.value = this.state.pkmList[pkmIndex].evSpDef;
-        evspeed.value = this.state.pkmList[pkmIndex].evSpeed;
-        kindBox.value = this.state.pkmList[pkmIndex].kind;
-
-        var typeOneForm = document.getElementById('type1');
-        var typeTwoForm = document.getElementById('type2');
-        typeOneForm.value = this.capitalize(this.state.pkmList[pkmIndex].type1);
-        var typeTwoStr = this.state.pkmList[pkmIndex].type2;
-        if (typeTwoStr == null) {
-            typeTwoForm.value = "None";
+        var artTab = document.getElementById('art');
+        var expTab = document.getElementById('export');
+        switch (this.state.tab) {
+            case 0:
+                selTab.classList.add("buttonTabSelected");
+                artTab.classList.remove("buttonTabSelected");
+                expTab.classList.remove("buttonTabSelected");
+                break;
+            case 1:
+                selTab.classList.remove("buttonTabSelected");
+                artTab.classList.add("buttonTabSelected");
+                expTab.classList.remove("buttonTabSelected");
+                break;
+            case 2:
+                selTab.classList.remove("buttonTabSelected");
+                artTab.classList.remove("buttonTabSelected");
+                expTab.classList.add("buttonTabSelected");
+                break;
         }
-        else {
-            typeTwoForm.value = this.capitalize(typeTwoStr);
-        }
+
+        //var artwork = document.getElementById('artwork');
+        //artwork.src = 'data:image/png;base64,' + this.state.pkmList[pkmIndex].artwork;
 
         requestAnimationFrame(() => { this.updateBar(0, pkmIndex) });
 
@@ -215,7 +270,37 @@ export class Home extends Component {
     }
 
     capitalize(string) {
-        return string.charAt(0).toUpperCase() + (string.slice(1)).toLowerCase();
+        if (string === null) {
+            return "None";
+        }
+        else {
+            return string.charAt(0).toUpperCase() + (string.slice(1)).toLowerCase();
+        }
+        
+    }
+
+    changeTab(newTab) {
+        this.setState({ tab: newTab });
+        var selTab = document.getElementById('info');
+        var artTab = document.getElementById('art');
+        var expTab = document.getElementById('export');
+        switch (newTab) {
+            case 0:
+                selTab.classList.add("buttonTabSelected");
+                artTab.classList.remove("buttonTabSelected");
+                expTab.classList.remove("buttonTabSelected");
+                break;
+            case 1:
+                selTab.classList.remove("buttonTabSelected");
+                artTab.classList.add("buttonTabSelected");
+                expTab.classList.remove("buttonTabSelected");
+                break;
+            case 2:
+                selTab.classList.remove("buttonTabSelected");
+                artTab.classList.remove("buttonTabSelected");
+                expTab.classList.add("buttonTabSelected");
+                break;
+        }
     }
 
 
@@ -230,8 +315,34 @@ export class Home extends Component {
     }
 
     savePkm(event) {
+        event.preventDefault();
         const data = new FormData(event.target);
         data.set('pokemonid', this.state.curIndex);
+        data.set('name', this.state.name);
+        data.set('internalName', this.state.internalName);
+        data.set('type1', this.state.type1);
+        data.set('type2', this.state.type2);
+        data.set('hp', this.state.hp);
+        data.set('attack', this.state.attack);
+        data.set('defense', this.state.defense);
+        data.set('spAtk', this.state.spAtk);
+        data.set('spDef', this.state.spDef);
+        data.set('speed', this.state.speed);
+        data.set('evhp', this.state.evhp);
+        data.set('evAttack', this.state.evAttack);
+        data.set('evDefense', this.state.evDefense);
+        data.set('evSpAtk', this.state.evSpAtk);
+        data.set('evSpDef', this.state.evSpDef);
+        data.set('evSpeed', this.state.evSpeed);
+        data.set('kind', this.state.kind);
+        data.set('growthRate', this.state.growthRate);
+        data.set('genderRate', this.state.genderRate);
+        data.set('eggGroup1', this.state.eggGroup1);
+        data.set('eggGroup2', this.state.eggGroup2);
+        data.set('artworkStr', this.state.artworkStr);
+        data.set('iconStr', this.state.iconStr);
+        data.set('frontSpriteStr', this.state.frontSpriteStr);
+        data.set('backSpriteStr', this.state.backSpriteStr);
         fetch('api/Home/SavePkm', {
             method: 'POST',
             body: data
@@ -242,14 +353,22 @@ export class Home extends Component {
     }
 
     render() {
-        const { pkmList, isLoading } = this.state;
-        
+        const { pkmList, isLoading, curIndex, name, internalName,
+            type1, type2,
+            hp, attack, defense, spAtk, spDef, speed,
+            evhp, evAttack, evDefense, evSpAtk, evSpDef, evSpeed,
+            kind, growthRate, genderRate, eggGroup1, eggGroup2,
+            artwork, icon, frontSprite, backSprite} = this.state;
+
+        if (isLoading) {
+            return <p>Loading ...</p>;
+        }
 
         return (
             
             <div>
                 <link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' />
-                <form class="searchb">
+                <form className="searchb">
                     <font color="#4d5f5c">Filter:</font><br/>
                     <input type="text" name="search"/>
                 </form>
@@ -258,253 +377,297 @@ export class Home extends Component {
                 <table id="pkmtable">
                     <thead>
                         <tr>
-                            <th></th>
+                            <th/>
                             <th>Pokemon</th>
                         </tr>
                     </thead>
-                    <tbody id="tbodyid" class="pkmlist" onScroll={this.checkTop}>
-                        {this.state.pkmList.map(pkm => <tr key={pkm.pokemonId} onClick={() => this.changeInfo(pkm.pokemonId)}>
+                    <tbody id="tbodyid" className="pkmlist" onScroll={this.checkTop}>
+                        {this.state.pkmList.map(pkm => (
+                        <tr key={pkm.pokemonId} onClick={() => this.changeInfo(pkm.pokemonId)}>
                             <td><img src={`data:image/jpeg;base64,${pkm.icon}`} /></td>
                             <td>{pkm.name}</td>
                         </tr>
-                        )}
+                        ))}
                     </tbody>
                 </table>
 
-                <form class="pkminfo" onSubmit={this.savePkm}>
-                    <button type="button" class="buttonTab" id="info">Info</button>
-                    <button type="button" class="buttonTab" id="art">Art</button>
-                    <button type="button" class="buttonTab" id="export">Export</button>
-                    <div>
-                        <img id="artwork" />
-                    </div>
-                    <div class="sectionOne">
-                        Name:<br />
-                        <input id="namebox" type="text" name="pkmname" />
-                        <br />
-                        <div class="type1">
-                            Type 1:<br />
-                            <select id="type1">
-                                <option>Normal</option>
-                                <option>Fighting</option>
-                                <option>Flying</option>
-                                <option>Poison</option>
-                                <option>Ground</option>
-                                <option>Rock</option>
-                                <option>Bug</option>
-                                <option>Ghost</option>
-                                <option>Steel</option>
-                                <option>Fire</option>
-                                <option>Water</option>
-                                <option>Grass</option>
-                                <option>Electric</option>
-                                <option>Psychic</option>
-                                <option>Ice</option>
-                                <option>Dragon</option>
-                                <option>Dark</option>
-                                <option>Fairy</option>
-                            </select>
-                        </div>
-                        <div class="type2">
-                            Type 2:<br />
-                            <select id="type2">
-                                <option>None</option>
-                                <option>Normal</option>
-                                <option>Fighting</option>
-                                <option>Flying</option>
-                                <option>Poison</option>
-                                <option>Ground</option>
-                                <option>Rock</option>
-                                <option>Bug</option>
-                                <option>Ghost</option>
-                                <option>Steel</option>
-                                <option>Fire</option>
-                                <option>Water</option>
-                                <option>Grass</option>
-                                <option>Electric</option>
-                                <option>Psychic</option>
-                                <option>Ice</option>
-                                <option>Dragon</option>
-                                <option>Dark</option>
-                                <option>Fairy</option>
-                            </select>
-                        </div>
-                        <br />Internal Name:<br />
-                        <input type="text" id="internalname" />
-                        <br />Kind:<br />
-                        <input type="text" id="kind" name="kind"/>
-                    </div> 
-
+                <form className="pkminfo" onSubmit={this.savePkm}>
                     
-                    <div class="sectionTwo">
-                        <div class="stat">
-                            HP:<br />
-                            <input type="number" id="hp" min="1" max="255" />
+                    <button type="button" className="buttonTab" id="info" onClick={() => this.changeTab(0)}>Info</button>
+                    <button type="button" className="buttonTab" id="art" onClick={() => this.changeTab(1)}>Art</button>
+                    <button type="button" className="buttonTab" id="export" onClick={() => this.changeTab(2)}>Export</button>
+
+                    {this.state.tab === 0 && <div className="infoSection">
+                        <div>
+                            <img id="artwork" src={'data:image/png;base64,' + artwork}/>
+                        </div>
+                        <div className="sectionOne">
+                            Name:<br />
+                            <input id="namebox" type="text" name="name" value={name} onChange={this.handleInputChange}/>
+                            <br />
+                            <div className="type1">
+                                Type 1:<br />
+                                <select id="type1" name="type1" value={type1} onChange={this.handleInputChange}>
+                                    <option>Normal</option>
+                                    <option>Fighting</option>
+                                    <option>Flying</option>
+                                    <option>Poison</option>
+                                    <option>Ground</option>
+                                    <option>Rock</option>
+                                    <option>Bug</option>
+                                    <option>Ghost</option>
+                                    <option>Steel</option>
+                                    <option>Fire</option>
+                                    <option>Water</option>
+                                    <option>Grass</option>
+                                    <option>Electric</option>
+                                    <option>Psychic</option>
+                                    <option>Ice</option>
+                                    <option>Dragon</option>
+                                    <option>Dark</option>
+                                    <option>Fairy</option>
+                                </select>
+                            </div>
+                            <div className="type2">
+                                Type 2:<br />
+                                <select id="type2" name="type2" value={type2} onChange={this.handleInputChange}>
+                                    <option>None</option>
+                                    <option>Normal</option>
+                                    <option>Fighting</option>
+                                    <option>Flying</option>
+                                    <option>Poison</option>
+                                    <option>Ground</option>
+                                    <option>Rock</option>
+                                    <option>Bug</option>
+                                    <option>Ghost</option>
+                                    <option>Steel</option>
+                                    <option>Fire</option>
+                                    <option>Water</option>
+                                    <option>Grass</option>
+                                    <option>Electric</option>
+                                    <option>Psychic</option>
+                                    <option>Ice</option>
+                                    <option>Dragon</option>
+                                    <option>Dark</option>
+                                    <option>Fairy</option>
+                                </select>
+                            </div>
+                            <br />Internal Name:<br />
+                            <input type="text" id="internalName" name="internalName" value={internalName} onChange={this.handleInputChange}/>
+                            <br />Kind:<br />
+                            <input type="text" id="kind" name="kind" value={kind} onChange={this.handleInputChange}/>
                         </div>
 
-                        <div class="stat">
-                            Attack:<br />
-                            <input type="number" id="attack" min="1" max="255" />
+
+                        <div className="sectionTwo">
+                            <div className="stat">
+                                HP:<br />
+                                <input type="number" id="hp" min="1" max="255" name="hp" value={hp} onChange={this.handleInputChange}/>
+                            </div>
+
+                            <div className="stat">
+                                Attack:<br />
+                                <input type="number" id="attack" min="1" max="255" name="attack" value={attack} onChange={this.handleInputChange}/>
+                            </div>
+
+                            <div className="stat">
+                                Defense:<br />
+                                <input type="number" id="defense" min="1" max="255" name="defense" value={defense} onChange={this.handleInputChange}/>
+                            </div>
+
+                            <div className="stat">
+                                Sp. Atk:<br />
+                                <input type="number" id="spatk" min="1" max="255" name="spAtk" value={spAtk} onChange={this.handleInputChange}/>
+                            </div>
+
+                            <div className="stat">
+                                Sp. Def:<br />
+                                <input type="number" id="spdef" min="1" max="255" name="spDef" value={spDef} onChange={this.handleInputChange}/>
+                            </div>
+
+                            <div className="stat">
+                                Speed:<br />
+                                <input type="number" id="speed" min="1" max="255" name="speed" value={speed} onChange={this.handleInputChange}/>
+                            </div>
                         </div>
 
-                        <div class="stat">
-                            Defense:<br />
-                            <input type="number" id="defense" min="1" max="255" />
+                        <canvas id="statCanvas" width="202" height="140"/>
+
+                        <div className="sectionThree">
+                            <div className="evstat">
+                                EVHP:<br />
+                                <input type="number" id="evhp" min="0" max="3" name="evhp" value={evhp} onChange={this.handleInputChange}/>
+                            </div>
+
+                            <div className="evstat">
+                                EVAtk:<br />
+                                <input type="number" id="evattack" min="0" max="3" name="evatk" value={evAttack} onChange={this.handleInputChange}/>
+                            </div>
+
+                            <div className="evstat">
+                                EVDef:<br />
+                                <input type="number" id="evdefense" min="0" max="3" name="evdefense" value={evDefense} onChange={this.handleInputChange}/>
+                            </div>
+
+                            <div className="evstat">
+                                EVSpA:<br />
+                                <input type="number" id="evspatk" min="0" max="3" name="evspatk" value={evSpAtk} onChange={this.handleInputChange}/>
+                            </div>
+
+                            <div className="evstat">
+                                EVSpD:<br />
+                                <input type="number" id="evspdef" min="0" max="3" name="evspdef" value={evSpDef} onChange={this.handleInputChange}/>
+                            </div>
+
+                            <div className="evstat">
+                                EVSpe:<br />
+                                <input type="number" id="evspeed" min="0" max="3" name="evspeed" value={evSpeed} onChange={this.handleInputChange}/>
+                            </div>
                         </div>
 
-                        <div class="stat">
-                            Sp. Atk:<br />
-                            <input type="number" id="spatk" min="1" max="255" />
+                        <div className="sectionMoves">
+                            <thead className="movelist">
+                                <tr>
+                                    <th className="movelist">Level</th>
+                                    <th className="movelist">Name</th>
+                                    <th className="movelist">Type</th>
+                                    <th className="movelist">Category</th>
+                                    <th className="movelist">Power</th>
+                                    <th className="movelist">Accuracy</th>
+                                    <th className="movelist">PP</th>
+                                </tr>
+                            </thead>
+                            <tbody className="movelist" onScroll={this.checkTop}>
+                                {this.state.moveList.map(move => (<tr key={move.level} >
+                                    <td className="movelistX"><button type="button" className="deleteMove" onClick={this.checkTop}>x</button></td>
+                                    <td className="movelist">{move.level}</td>
+                                    <td className="movelist">{move.name}</td>
+                                    <td className="movelist">{move.type}</td>
+                                    <td className="movelist">{move.category}</td>
+                                    <td className="movelist">{move.bp}</td>
+                                    <td className="movelist">{move.accuracy}%</td>
+                                    <td className="movelist">{move.pp}</td>
+
+                                </tr>)
+                                )}
+                            </tbody>
                         </div>
 
-                        <div class="stat">
-                            Sp. Def:<br />
-                            <input type="number" id="spdef" min="1" max="255" />
+                        <div className="sectionFour">
+                            <div className="rate">
+                                Gender Rate:<br />
+                                <select id="genderrate" name="genderRate" value={genderRate} onChange={this.handleInputChange}>
+                                    <option>AlwaysMale</option>
+                                    <option>FemaleOneEighth</option>
+                                    <option>Female25Percent</option>
+                                    <option>Female50Percent</option>
+                                    <option>Female75Percent</option>
+                                    <option>FemaleSevenEighths</option>
+                                    <option>AlwaysFemale</option>
+                                    <option>Genderless</option>
+                                </select>
+                            </div>
+
+                            <div className="rate">
+                                Growth Rate:<br />
+                                <select id="growthrate" name="growthRate" value={growthRate} onChange={this.handleInputChange}>
+                                    <option>Fast</option>
+                                    <option>Medium</option>
+                                    <option>MediumFast</option>
+                                    <option>Slow</option>
+                                    <option>Parabolic</option>
+                                    <option>MediumSlow</option>
+                                    <option>Erratic</option>
+                                    <option>Fluctuating</option>
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="stat">
-                            Speed:<br />
-                            <input type="number" id="speed" min="1" max="255" />
-                        </div>
-                    </div>
-
-                    <canvas id="statCanvas" width="202" height="140">
-                    </canvas>
-
-                    <div class="sectionThree">
-                        <div class="evstat">
-                            EVHP:<br />
-                            <input type="number" id="evhp" min="0" max="3" />
-                        </div>
-
-                        <div class="evstat">
-                            EVAtk:<br />
-                            <input type="number" id="evattack" min="0" max="3" />
-                        </div>
-
-                        <div class="evstat">
-                            EVDef:<br />
-                            <input type="number" id="evdefense" min="0" max="3" />
-                        </div>
-
-                        <div class="evstat">
-                            EVSpA:<br />
-                            <input type="number" id="evspatk" min="0" max="3" />
-                        </div>
-
-                        <div class="evstat">
-                            EVSpD:<br />
-                            <input type="number" id="evspdef" min="0" max="3" />
-                        </div>
-
-                        <div class="evstat">
-                            EVSpe:<br />
-                            <input type="number" id="evspeed" min="0" max="3" />
-                        </div>
-                    </div>
-
-                    <div class="sectionMoves">
-                        <thead class="movelist">
-                            <tr>
-                            <th class="movelist">Level</th>
-                            <th class="movelist">Name</th>
-                            <th class="movelist">Type</th>
-                            <th class="movelist">Category</th>
-                            <th class="movelist">Power</th>
-                            <th class="movelist">Accuracy</th>
-                            <th class="movelist">PP</th>
-                            </tr>
-                        </thead>
-                        <tbody class="movelist" onScroll={this.checkTop}>
-                            {this.state.moveList.map(move => <tr key={move.level} >
-                                <td class="movelistX"><button type="button" class="deleteMove" onClick={this.checkTop}>x</button></td>
-                                <td class="movelist">{move.level}</td>
-                                <td class="movelist">{move.name}</td>
-                                <td class="movelist">{move.type}</td>
-                                <td class="movelist">{move.category}</td>
-                                <td class="movelist">{move.bp}</td>
-                                <td class="movelist">{move.accuracy}%</td>
-                                <td class="movelist">{move.pp}</td>
-
-                            </tr>
-                            )}
-                        </tbody>
-                    </div>
-
-                    <div class="sectionFour">
-                        <div class="rate">
-                            Gender Rate:<br />
-                            <select id="genderrate">
-                                <option>AlwaysMale</option>
-                                <option>FemaleOneEighth</option>
-                                <option>Female25Percent</option>
-                                <option>Female50Percent</option>
-                                <option>Female75Percent</option>
-                                <option>FemaleSevenEighths</option>
-                                <option>AlwaysFemale</option>
-                                <option>Genderless</option>
-                            </select>
+                        <br />
+                        <div className="sectionFive">
+                            <div className="eggGroup1" >
+                                Egg Group 1:<br />
+                                <select id="egggroup1" name="eggGroup1" value={eggGroup1} onChange={this.handleInputChange}>
+                                    <option>Monster</option>
+                                    <option>Water1</option>
+                                    <option>Water2</option>
+                                    <option>Water3</option>
+                                    <option>Bug</option>
+                                    <option>Flying</option>
+                                    <option>Fairy</option>
+                                    <option>Grass</option>
+                                    <option>Humanlike</option>
+                                    <option>Mineral</option>
+                                    <option>Amorphous</option>
+                                    <option>Dragon</option>
+                                    <option>Ditto</option>
+                                    <option>Undiscovered</option>
+                                </select>
+                            </div>
+                            <div className="egggroup">
+                                Egg Group 2:<br />
+                                <select id="egggroup2" name="eggGroup2" value={eggGroup2} onChange={this.handleInputChange}>
+                                    <option>None</option>
+                                    <option>Monster</option>
+                                    <option>Water1</option>
+                                    <option>Water2</option>
+                                    <option>Water3</option>
+                                    <option>Bug</option>
+                                    <option>Flying</option>
+                                    <option>Fairy</option>
+                                    <option>Grass</option>
+                                    <option>Humanlike</option>
+                                    <option>Mineral</option>
+                                    <option>Amorphous</option>
+                                    <option>Dragon</option>
+                                    <option>Ditto</option>
+                                    <option>Undiscovered</option>
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="rate">
-                            Growth Rate:<br />
-                            <select id="growthrate">
-                                <option>Fast</option>
-                                <option>Medium</option>
-                                <option>MediumFast</option>
-                                <option>Slow</option>
-                                <option>Parabolic</option>
-                                <option>MediumSlow</option>
-                                <option>Erratic</option>
-                                <option>Fluctuating</option>
-                            </select>
-                        </div>
-                    </div>
+                    </div>}
 
-                    <br/>
-                    <div class="sectionFive">
-                        <div class="egggroup">
-                            Egg Group 1:<br />
-                            <select id="egggroup1">
-                                <option>Monster</option>
-                                <option>Water1</option>
-                                <option>Water2</option>
-                                <option>Water3</option>
-                                <option>Bug</option>
-                                <option>Flying</option>
-                                <option>Fairy</option>
-                                <option>Grass</option>
-                                <option>Humanlike</option>
-                                <option>Mineral</option>
-                                <option>Amorphous</option>
-                                <option>Dragon</option>
-                                <option>Ditto</option>
-                                <option>Undiscovered</option>
-                            </select>
+                    {this.state.tab === 1 && <div className="artSection">
+                        <div className="imgArtwork">
+                            Artwork:<br/>
+                            <img id="artwork" src={'data:image/png;base64,' + artwork}/>
+                            <input type="file" name="artworkStr" accept="image/*" onChange={this.handleInputChange}/>
+                            {/* <button type="button" className="upload">Upload</button> */}
                         </div>
-                        <div class="egggroup">
-                            Egg Group 2:<br />
-                            <select id="egggroup2">
-                                <option>None</option>
-                                <option>Monster</option>
-                                <option>Water1</option>
-                                <option>Water2</option>
-                                <option>Water3</option>
-                                <option>Bug</option>
-                                <option>Flying</option>
-                                <option>Fairy</option>
-                                <option>Grass</option>
-                                <option>Humanlike</option>
-                                <option>Mineral</option>
-                                <option>Amorphous</option>
-                                <option>Dragon</option>
-                                <option>Ditto</option>
-                                <option>Undiscovered</option>
-                            </select>
+                        <div className="imgIcon">
+                            Icon:<br />
+                            <img id="icon" src={'data:image/png;base64,' + icon}/>
+                            <input type="file" name="iconStr" accept="image/*" onChange={this.handleInputChange}/>
+                            {/* <button type="button" className="upload">Upload</button> */}
                         </div>
-                    </div>
-                    <div class="sectionSix">
-                        <input type="submit" value="Save" />
+                        <div className="imgFront">
+                            Front Sprite:<br />
+                            <img id="frontSprite" />
+                            <input type="file" name="frontSpriteStr" accept="image/*" onChange={this.handleInputChange}/>
+                            {/* <button type="button" className="upload">Upload</button> */}
+                        </div>
+                        <div className="imgBack">
+                            Back Sprite:<br />
+                            <img id="backSprite" />
+                            <input type="file" name="backSpriteStr" accept="image/*" onChange={this.handleInputChange}/>
+                            {/* <button type="button" className="upload">Upload</button> */}
+                        </div>
+                    </div>}
+
+                    {this.state.tab === 2 && <div className="exportSection">
+                        Export:<br />
+                        <select id="exportSel">
+                            <option>General</option>
+                            <option>Moves</option>
+                        </select>
+                        <br />
+                        <textarea rows="15" cols="80" name="text" />
+
+                    </div>}
+    
+                    <div className="sectionSix">
+                        <input type="submit" value="Save"/>
                     </div>
                 </form>
             </div>    
