@@ -638,7 +638,7 @@ export class Home extends Component {
                     {this.state.tab === 1 && <div className="artSection">
                         <div className="imgArtwork">
                             Artwork:<br/>
-                            <img src={'data:image/png;base64,' + artwork} height="52" width="52"/>
+                            <img id="artwork" src={'data:image/png;base64,' + artwork} height="52" width="52"/>
                             <input type="file" name="artworkStr" accept="image/*" onChange={this.handleInputChange}/>
                             {/* <button type="button" className="upload">Upload</button> */}
                         </div>
@@ -650,13 +650,13 @@ export class Home extends Component {
                         </div>
                         <div className="imgFront">
                             Front Sprite:<br />
-                            <img id="frontSprite" />
+                            <img id="frontSprite" src={'data:image/png;base64,' + frontSprite}/>
                             <input type="file" name="frontSpriteStr" accept="image/*" onChange={this.handleInputChange}/>
                             {/* <button type="button" className="upload">Upload</button> */}
                         </div>
                         <div className="imgBack">
                             Back Sprite:<br />
-                            <img id="backSprite" />
+                            <img id="backSprite" src={'data:image/png;base64,' + backSprite}/>
                             <input type="file" name="backSpriteStr" accept="image/*" onChange={this.handleInputChange}/>
                             {/* <button type="button" className="upload">Upload</button> */}
                         </div>
