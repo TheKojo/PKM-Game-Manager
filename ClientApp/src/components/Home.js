@@ -170,61 +170,63 @@ export class Home extends Component {
     updateBar(prog, pkmIndex) {
 
         var canvas = document.getElementById('statCanvas');
-        var context = canvas.getContext("2d");
-        context.fillStyle = "#4d5f5c";
-        context.fillRect(0, 0, 250, 140);
+        if (canvas !== null) {
+            var context = canvas.getContext("2d");
+            context.fillStyle = "#4d5f5c";
+            context.fillRect(0, 0, 250, 140);
 
-        context.fillStyle = "#5b7672";
-        context.fillRect(0, 110, 250, 30);
+            context.fillStyle = "#5b7672";
+            context.fillRect(0, 110, 250, 30);
 
-        context.fillStyle = "#ffffff";
-        context.fillText("HP", 18, 122);
-        context.fillText("ATK", 46, 122);
-        context.fillText("DEF", 76, 122);
-        context.fillText("SPA", 106, 122);
-        context.fillText("SPD", 136, 122);
-        context.fillText("SPE", 166, 122);
+            context.fillStyle = "#ffffff";
+            context.fillText("HP", 18, 122);
+            context.fillText("ATK", 46, 122);
+            context.fillText("DEF", 76, 122);
+            context.fillText("SPA", 106, 122);
+            context.fillText("SPD", 136, 122);
+            context.fillText("SPE", 166, 122);
 
-        var bst = 0;
+            var bst = 0;
 
-        var stat = this.state.pkmList[pkmIndex].hp;
-        context.fillStyle = this.getBarColor(stat * (prog / 100));
-        context.fillRect(20, 110 - (stat / 2) * (prog / 100), 10, (stat / 2) * (prog / 100));
-        bst = bst + stat;
+            var stat = this.state.pkmList[pkmIndex].hp;
+            context.fillStyle = this.getBarColor(stat * (prog / 100));
+            context.fillRect(20, 110 - (stat / 2) * (prog / 100), 10, (stat / 2) * (prog / 100));
+            bst = bst + stat;
 
-        stat = this.state.pkmList[pkmIndex].attack;
-        context.fillStyle = this.getBarColor(stat * (prog / 100));
-        context.fillRect(50, 110 - (stat / 2) * (prog / 100), 10, (stat / 2) * (prog / 100));
-        bst = bst + stat;
+            stat = this.state.pkmList[pkmIndex].attack;
+            context.fillStyle = this.getBarColor(stat * (prog / 100));
+            context.fillRect(50, 110 - (stat / 2) * (prog / 100), 10, (stat / 2) * (prog / 100));
+            bst = bst + stat;
 
-        stat = this.state.pkmList[pkmIndex].defense;
-        context.fillStyle = this.getBarColor(stat * (prog / 100));
-        context.fillRect(80, 110 - (stat / 2) * (prog / 100), 10, (stat / 2) * (prog / 100));
-        bst = bst + stat;
+            stat = this.state.pkmList[pkmIndex].defense;
+            context.fillStyle = this.getBarColor(stat * (prog / 100));
+            context.fillRect(80, 110 - (stat / 2) * (prog / 100), 10, (stat / 2) * (prog / 100));
+            bst = bst + stat;
 
-        stat = this.state.pkmList[pkmIndex].spAtk;
-        context.fillStyle = this.getBarColor(stat * (prog / 100));
-        context.fillRect(110, 110 - (stat / 2) * (prog / 100), 10, (stat / 2) * (prog / 100));
-        bst = bst + stat;
+            stat = this.state.pkmList[pkmIndex].spAtk;
+            context.fillStyle = this.getBarColor(stat * (prog / 100));
+            context.fillRect(110, 110 - (stat / 2) * (prog / 100), 10, (stat / 2) * (prog / 100));
+            bst = bst + stat;
 
-        stat = this.state.pkmList[pkmIndex].spDef;
-        context.fillStyle = this.getBarColor(stat * (prog / 100));
-        context.fillRect(140, 110 - (stat / 2) * (prog / 100), 10, (stat / 2) * (prog / 100));
-        bst = bst + stat;
+            stat = this.state.pkmList[pkmIndex].spDef;
+            context.fillStyle = this.getBarColor(stat * (prog / 100));
+            context.fillRect(140, 110 - (stat / 2) * (prog / 100), 10, (stat / 2) * (prog / 100));
+            bst = bst + stat;
 
-        stat = this.state.pkmList[pkmIndex].speed;
-        context.fillStyle = this.getBarColor(stat * (prog / 100));
-        context.fillRect(170, 110 - (stat / 2) * (prog / 100), 10, (stat / 2) * (prog / 100));
-        bst = bst + stat;
+            stat = this.state.pkmList[pkmIndex].speed;
+            context.fillStyle = this.getBarColor(stat * (prog / 100));
+            context.fillRect(170, 110 - (stat / 2) * (prog / 100), 10, (stat / 2) * (prog / 100));
+            bst = bst + stat;
 
-        context.fillStyle = this.getBarColor(bst / 6);
-        context.fillText("BST: " + bst, 85, 135);
+            context.fillStyle = this.getBarColor(bst / 6);
+            context.fillText("BST: " + bst, 85, 135);
 
-        if (prog < 100) {
-            requestAnimationFrame(() => { this.updateBar(prog + 5, pkmIndex) });
+            if (prog < 100) {
+                requestAnimationFrame(() => { this.updateBar(prog + 5, pkmIndex) });
+            }
+
+            this.getMoveList();
         }
-        
-        this.getMoveList();
     }
 
     getBarColor(statVal) {
@@ -289,6 +291,7 @@ export class Home extends Component {
                 selTab.classList.add("buttonTabSelected");
                 artTab.classList.remove("buttonTabSelected");
                 expTab.classList.remove("buttonTabSelected");
+                requestAnimationFrame(() => { this.updateBar(0, this.state.curIndex) });
                 break;
             case 1:
                 selTab.classList.remove("buttonTabSelected");
@@ -316,6 +319,7 @@ export class Home extends Component {
 
     savePkm(event) {
         event.preventDefault();
+        var index = this.state.curIndex - 1
         const data = new FormData(event.target);
         data.set('pokemonid', this.state.curIndex);
         data.set('name', this.state.name);
@@ -346,10 +350,13 @@ export class Home extends Component {
         fetch('api/Home/SavePkm', {
             method: 'POST',
             body: data
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                this.props.history.push("/import");
-            })
+        })
+        .then((response) => response.json())
+        .then(data => this.setState({
+            pkmList: data, isLoading: false,
+            artwork: data[index].artwork, icon: data[index].icon,
+            frontSprite: data[index].frontSprite, backSprite: data[index].backSprite
+        }));
     }
 
     render() {
@@ -399,7 +406,7 @@ export class Home extends Component {
 
                     {this.state.tab === 0 && <div className="infoSection">
                         <div>
-                            <img id="artwork" src={'data:image/png;base64,' + artwork}/>
+                            <img id="artwork" src={'data:image/png;base64,' + artwork} height="252" width="252"/>
                         </div>
                         <div className="sectionOne">
                             Name:<br />
@@ -631,7 +638,7 @@ export class Home extends Component {
                     {this.state.tab === 1 && <div className="artSection">
                         <div className="imgArtwork">
                             Artwork:<br/>
-                            <img id="artwork" src={'data:image/png;base64,' + artwork}/>
+                            <img src={'data:image/png;base64,' + artwork} height="52" width="52"/>
                             <input type="file" name="artworkStr" accept="image/*" onChange={this.handleInputChange}/>
                             {/* <button type="button" className="upload">Upload</button> */}
                         </div>

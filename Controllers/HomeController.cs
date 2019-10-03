@@ -29,11 +29,13 @@ namespace pkm_game_manager.Controllers
 
         [HttpPost]
         [Route("api/Home/SavePkm")]
-        public IActionResult SavePkm(Pokemon pkm)
+        public IEnumerable<Pokemon> SavePkm(Pokemon pkm)//public IActionResult SavePkm(Pokemon pkm)
         {
             PkmContext context = HttpContext.RequestServices.GetService(typeof(pkm_game_manager.Models.PkmContext)) as PkmContext;
             context.savePokemon(pkm);
-            return View();
+            //return View();
+            IEnumerable<Pokemon> pkmList = context.Pokemon.ToList();
+            return pkmList;
         }
 
     }

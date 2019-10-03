@@ -453,7 +453,33 @@ namespace pkm_game_manager.Models
                 pkm.Type2 = pkm.Type2.ToUpper();
             }
 
+            //Pokemon.Attach(pkm);
+
             Pokemon.Update(pkm);
+            if (pkm.Ability1 == null)
+            {
+                Entry(pkm).Property(x => x.Ability1).IsModified = false;
+            }
+            if (pkm.Ability2 == null)
+            {
+                Entry(pkm).Property(x => x.Ability2).IsModified = false;
+            }
+            if (pkm.Color == null)
+            {
+                Entry(pkm).Property(x => x.Color).IsModified = false;
+            }
+            if (pkm.Artwork == null)
+            {
+                Entry(pkm).Property(x => x.Artwork).IsModified = false;
+            }
+            if (pkm.Icon == null)
+            {
+                Entry(pkm).Property(x => x.Icon).IsModified = false;
+            }
+            if (pkm.FrontSprite == null)
+            {
+                Entry(pkm).Property(x => x.FrontSprite).IsModified = false;
+            }
             SaveChanges();
         }
 
