@@ -420,25 +420,25 @@ namespace pkm_game_manager.Models
 
         public void savePokemon(Pokemon pkm)
         {
-            if (pkm.IconStr != null)
+            if (pkm.IconStr != null && !pkm.IconStr.Equals("null"))
             {
                 string imgStr = pkm.IconStr;
                 string bytes = imgStr.Substring(imgStr.IndexOf(",") + 1);
                 pkm.Icon = Convert.FromBase64String(bytes);
             }
-            if (pkm.ArtworkStr != null)
+            if (pkm.ArtworkStr != null && !pkm.ArtworkStr.Equals("null"))
             {
                 string imgStr = pkm.ArtworkStr;
                 string bytes = imgStr.Substring(imgStr.IndexOf(",") + 1);
                 pkm.Artwork = Convert.FromBase64String(bytes);
             }
-            if (pkm.FrontSpriteStr != null)
+            if (pkm.FrontSpriteStr != null && !pkm.FrontSpriteStr.Equals("null"))
             {
                 string imgStr = pkm.FrontSpriteStr;
                 string bytes = imgStr.Substring(imgStr.IndexOf(",") + 1);
                 pkm.FrontSprite = Convert.FromBase64String(bytes);
             }
-            if (pkm.BackSpriteStr != null)
+            if (pkm.BackSpriteStr != null && !pkm.BackSpriteStr.Equals("null"))
             {
                 string imgStr = pkm.BackSpriteStr;
                 string bytes = imgStr.Substring(imgStr.IndexOf(",") + 1);
@@ -481,6 +481,13 @@ namespace pkm_game_manager.Models
                 Entry(pkm).Property(x => x.FrontSprite).IsModified = false;
             }
             SaveChanges();
+            int test = 5;
+        }
+
+        public List<Pokemon> getPkm()
+        {
+            var pkm = Pokemon.AsNoTracking().ToList();
+            return pkm;
         }
 
         public List<MovePokemonMove> getMoveList (int pkmId)

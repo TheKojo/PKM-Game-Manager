@@ -34,6 +34,15 @@ namespace pkm_game_manager.Controllers
             PkmContext context = HttpContext.RequestServices.GetService(typeof(pkm_game_manager.Models.PkmContext)) as PkmContext;
             context.savePokemon(pkm);
             //return View();
+            IEnumerable<Pokemon> pkmList = context.getPkm();
+            return pkmList;
+        }
+
+        [HttpGet]
+        [Route("api/Home/PkmInfo")]
+        public IEnumerable<Pokemon> PkmInfo(Pokemon pkm)
+        {
+            PkmContext context = HttpContext.RequestServices.GetService(typeof(pkm_game_manager.Models.PkmContext)) as PkmContext;
             IEnumerable<Pokemon> pkmList = context.Pokemon.ToList();
             return pkmList;
         }

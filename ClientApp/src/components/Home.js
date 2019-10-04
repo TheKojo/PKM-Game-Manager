@@ -49,6 +49,17 @@ export class Home extends Component {
             }));
     }
 
+    /*componentDidUpdate() {
+        var index = this.state.curIndex - 1;
+        fetch('api/Home/Index')
+            .then(response => response.json())
+            .then(data => this.setState({
+                pkmList: data, isLoading: false,
+                artwork: data[index].artwork, icon: data[index].icon,
+                frontSprite: data[index].frontSprite, backSprite: data[index].backSprite
+            }));
+    }*/
+
     handleInputChange(event) {
         let reader = new FileReader();
         const target = event.target;
@@ -73,7 +84,15 @@ export class Home extends Component {
         if (name === "iconStr" || name === "artworkStr" || name === "frontSpriteStr" || name === "backSpriteStr") {
             let file = target.files[0];
             //reader.readAsArrayBuffer(file);
-            reader.readAsDataURL(file);
+            if (typeof file !== 'undefined') {
+                reader.readAsDataURL(file);
+            }
+            /*else {
+                this.setState({
+                    [name]: null
+                });
+            }*/
+            
         }
         else {
             this.setState({ [name]: value });
@@ -133,11 +152,30 @@ export class Home extends Component {
             hp: hp, attack: attack, defense: defense, spAtk: spAtk, spDef: spDef, speed: speed,
             evhp: evhp, evAttack: evAttack, evDefense: evDefense, evSpAtk: evSpAtk, evSpDef: evSpDef, evSpeed: evSpeed,
             kind: kind, growthRate: growthRate, genderRate: genderRate,
-            eggGroup1: eggGroup1, eggGroup2: eggGroup2,
-            artwork: artwork, icon: icon, frontSprite: frontSprite, backSprite: backSprite
+            eggGroup1: eggGroup1, eggGrouvp2: eggGroup2,
+            artwork: artwork, icon: icon, frontSprite: frontSprite, backSprite: backSprite,
+            artworkStr: null, iconStr: null, frontSpriteStr: null, backSpriteStr: null
         });
         
         table.rows[pkmId].classList.add("selected");
+
+        //Set image inputs back to null
+        var artworkInput = document.getElementById('artworkFileInput');
+        if (artworkInput !== null) {
+            artworkInput.value = null;
+        }
+        var iconInput = document.getElementById('iconFileInput');
+        if (iconInput !== null) {
+            iconInput.value = null;
+        }
+        var frontSpriteInput = document.getElementById('frontSpriteFileInput');
+        if (frontSpriteInput !== null) {
+            frontSpriteInput.value = null;
+        }
+        var backSpriteInput = document.getElementById('backSpriteFileInput');
+        if (backSpriteInput !== null) {
+            backSpriteInput.value = null;
+        }
 
         var selTab = document.getElementById('info');
         var artTab = document.getElementById('art');
@@ -319,7 +357,7 @@ export class Home extends Component {
 
     savePkm(event) {
         event.preventDefault();
-        var index = this.state.curIndex - 1
+        var index = this.state.curIndex - 1;
         const data = new FormData(event.target);
         data.set('pokemonid', this.state.curIndex);
         data.set('name', this.state.name);
@@ -357,6 +395,9 @@ export class Home extends Component {
             artwork: data[index].artwork, icon: data[index].icon,
             frontSprite: data[index].frontSprite, backSprite: data[index].backSprite
         }));
+
+
+
     }
 
     render() {
@@ -639,25 +680,25 @@ export class Home extends Component {
                         <div className="imgArtwork">
                             Artwork:<br/>
                             <img id="artwork" src={'data:image/png;base64,' + artwork} height="52" width="52"/>
-                            <input type="file" name="artworkStr" accept="image/*" onChange={this.handleInputChange}/>
+                            <input type="file" id="artworkFileInput" name="artworkStr" accept="image/*" onChange={this.handleInputChange}/>
                             {/* <button type="button" className="upload">Upload</button> */}
                         </div>
                         <div className="imgIcon">
                             Icon:<br />
                             <img id="icon" src={'data:image/png;base64,' + icon}/>
-                            <input type="file" name="iconStr" accept="image/*" onChange={this.handleInputChange}/>
+                            <input type="file" id="iconFileInput" name="iconStr" accept="image/*" onChange={this.handleInputChange}/>
                             {/* <button type="button" className="upload">Upload</button> */}
                         </div>
                         <div className="imgFront">
                             Front Sprite:<br />
                             <img id="frontSprite" src={'data:image/png;base64,' + frontSprite}/>
-                            <input type="file" name="frontSpriteStr" accept="image/*" onChange={this.handleInputChange}/>
+                            <input type="file" id="frontSpriteFileInput" name="frontSpriteStr" accept="image/*" onChange={this.handleInputChange}/>
                             {/* <button type="button" className="upload">Upload</button> */}
                         </div>
                         <div className="imgBack">
                             Back Sprite:<br />
                             <img id="backSprite" src={'data:image/png;base64,' + backSprite}/>
-                            <input type="file" name="backSpriteStr" accept="image/*" onChange={this.handleInputChange}/>
+                            <input type="file" id="backSpriteFileInput" name="backSpriteStr" accept="image/*" onChange={this.handleInputChange}/>
                             {/* <button type="button" className="upload">Upload</button> */}
                         </div>
                     </div>}
