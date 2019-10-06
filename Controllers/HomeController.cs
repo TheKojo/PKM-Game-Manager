@@ -47,6 +47,24 @@ namespace pkm_game_manager.Controllers
             return pkmList;
         }
 
+        [HttpPost]
+        [Route("api/Home/ExportMoves")]
+        public ActionResult ExportMoves(Pokemon pkm)
+        {
+            PkmContext context = HttpContext.RequestServices.GetService(typeof(pkm_game_manager.Models.PkmContext)) as PkmContext;
+            String moveText = "blabla";//context.Pokemon.ToList();
+            List<string> textList = new List<string>();
+            textList.Add(moveText);
+            //return textList;
+            //return Json(new { exportText = "blabla" });
+            return Content("Hello World!");
+            //return moveText;
+            //return new ContentResult { Content = moveText, ContentType = "application/json" };
+
+            /*ActionResult moveText = Content("blabla");//context.Pokemon.ToList();
+             return Content("blabla", "application/json");*/
+        }
+
     }
 }
  

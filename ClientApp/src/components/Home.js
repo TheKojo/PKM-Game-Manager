@@ -26,7 +26,8 @@ export class Home extends Component {
             artwork: '', artworkStr: '',
             icon: '', iconStr: '',
             frontSprite: '', frontSpriteStr: '',
-            backSprite: '', backSpriteStr: ''
+            backSprite: '', backSpriteStr: '',
+            exportText: ''
         };
 
         this.changeInfo = this.changeInfo.bind(this);
@@ -36,6 +37,8 @@ export class Home extends Component {
         this.getMoveList = this.getMoveList.bind(this);
         this.changeTab = this.changeTab.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.exportMoves = this.exportMoves.bind(this);
+        this.checkString = this.checkString.bind(this);
     }
 
     componentDidMount() {
@@ -154,7 +157,8 @@ export class Home extends Component {
             kind: kind, growthRate: growthRate, genderRate: genderRate,
             eggGroup1: eggGroup1, eggGrouvp2: eggGroup2,
             artwork: artwork, icon: icon, frontSprite: frontSprite, backSprite: backSprite,
-            artworkStr: null, iconStr: null, frontSpriteStr: null, backSpriteStr: null
+            artworkStr: null, iconStr: null, frontSpriteStr: null, backSpriteStr: null,
+            exportText: ''
         });
         
         table.rows[pkmId].classList.add("selected");
@@ -355,6 +359,22 @@ export class Home extends Component {
             .then(data => this.setState({ moveList: data }));
     }
 
+    exportMoves() {
+        const data = new FormData();
+        data.set('pokemonid', this.state.curIndex);
+        fetch('api/Home/ExportMoves', {
+            method: 'POST',
+            body: data
+        })
+            .then((response) => response.text())
+            .then(data => this.setState({ exportText: data }));
+
+            //.then(data => { this.checkString(data); });
+            //.then(data => { console.log(data) });
+        
+    }
+
+
     savePkm(event) {
         event.preventDefault();
         var index = this.state.curIndex - 1;
@@ -406,7 +426,7 @@ export class Home extends Component {
             hp, attack, defense, spAtk, spDef, speed,
             evhp, evAttack, evDefense, evSpAtk, evSpDef, evSpeed,
             kind, growthRate, genderRate, eggGroup1, eggGroup2,
-            artwork, icon, frontSprite, backSprite} = this.state;
+            artwork, icon, frontSprite, backSprite, exportText} = this.state;
 
         if (isLoading) {
             return <p>Loading ...</p>;
@@ -710,8 +730,8 @@ export class Home extends Component {
                             <option>Moves</option>
                         </select>
                         <br />
-                        <textarea rows="15" cols="80" name="text" />
-
+                        <textarea rows="15" cols="80" name="text" defaultValue={this.state.exportText} value={this.state.exportText}/>
+                        <button type="button" className="exportButton" onClick={this.exportMoves}>Export</button>
                     </div>}
     
                     <div className="sectionSix">

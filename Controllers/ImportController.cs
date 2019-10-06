@@ -39,7 +39,7 @@ namespace pkm_game_manager.Controllers
             PkmContext context = HttpContext.RequestServices.GetService(typeof(pkm_game_manager.Models.PkmContext)) as PkmContext;
             if (pbsText.PBSType.Equals("Pokemon"))
             {
-                context.addPBStest(pbsText.Text);
+                context.addPBS(pbsText.Text);
             }
             else if (pbsText.PBSType.Equals("Move"))
             {

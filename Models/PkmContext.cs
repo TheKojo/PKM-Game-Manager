@@ -36,7 +36,7 @@ namespace pkm_game_manager.Models
             return new MySqlConnection(ConnectionString);
         }
 
-        public void addPBS(string pbs)
+        public void addPBSOld(string pbs)
         {
             List<Pokemon> pkmList = parsePBS(pbs);
             using (MySqlConnection conn = GetConnection())
@@ -98,7 +98,7 @@ namespace pkm_game_manager.Models
             }
         }
 
-        public void addPBStest(string pbs)
+        public void addPBS(string pbs)
         {
             List<Pokemon> pkmList = parsePBS(pbs);
             for (int i = 0; i < pkmList.Count; i++)
@@ -332,10 +332,16 @@ namespace pkm_game_manager.Models
                 pbs = pbs.Substring(pbs.IndexOf("=") + 1);
                 pkm.Shape = Int32.Parse(pbs.Substring(0, pbs.IndexOf("\r\n")));
 
+                pbs = pbs.Substring(pbs.IndexOf("\r\n"));
                 //Habitat
-                pbs = pbs.Substring(pbs.IndexOf("Habitat"));
-                pbs = pbs.Substring(pbs.IndexOf("=") + 1);
-                pkm.Habitat = pbs.Substring(0, pbs.IndexOf("\r\n"));
+                int distance = pbs.IndexOf("Habitat");
+                if (distance <= 2)
+                {
+                    pbs = pbs.Substring(pbs.IndexOf("Habitat"));
+                    pbs = pbs.Substring(pbs.IndexOf("=") + 1);
+                    pkm.Habitat = pbs.Substring(0, pbs.IndexOf("\r\n"));
+                }
+
 
                 //Kind
                 pbs = pbs.Substring(pbs.IndexOf("Kind"));
