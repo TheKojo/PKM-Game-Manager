@@ -424,6 +424,70 @@ namespace pkm_game_manager.Models
             return moveList;
         }
 
+        public string exportMoveText(Pokemon pkm)
+        {
+
+            Pokemon poke = this.Pokemon.ToList().ElementAt(pkm.PokemonId-1);
+            /*
+             * {{MoveLevelStart|Kokoala|Grass|Grass}}
+                {{MoveLevel+|1|Scratch}}
+                {{MoveLevel+|3|Growl}}
+                {{MoveLevel+|7|Leech Seed}}
+                {{MoveLevel+|9|Vine Whip|'''}}
+                {{MoveLevel+|11|Bite|''}}
+                {{MoveLevel+|15|Milk Drink}}
+                {{MoveLevel+|18|Razor Leaf|'''}}
+                {{MoveLevel+|22|Take Down}}
+                {{MoveLevel+|25|Coconut Drop|'''}}
+                {{MoveLevel+|30|Seed Bomb|'''}}
+                {{MoveLevel+|35|Solar Beam|'''}}
+                {{MoveLevel+|40|Leaf Storm|'''}}
+                {{MoveLevelEnd|Kokoala|Grass|Grass}}
+             */
+            List<MovePokemonMove> moveList = getMoveList(pkm.PokemonId);
+            string type1 = "";
+            string type2 = "";
+            if (poke.Type1 != null)
+            {
+                type1 = poke.Type1.Substring(0, 1) + poke.Type1.ToLower().Substring(1);
+            }
+            if (poke.Type2 != null)
+            {
+                type2 = poke.Type2.Substring(0, 1) + poke.Type2.ToLower().Substring(1);
+            }
+            string moveText = "{{MoveLevelStart|" + poke.Name + "|" + type1 + "|";
+            if (poke.Type2 != null && poke.Type2 != "NONE")
+            {
+                moveText += type2;
+            }
+            else
+            {
+                moveText += type1;
+            }
+            moveText += "}}\r\n";
+            for (int i = 0; i<moveList.Count; i++)
+            {
+                MovePokemonMove move = moveList.ElementAt(i);
+                moveText += "{{MoveLevel+|" + move.Level + "|" + move.Name;
+                if (move.Type == poke.Type1 || move.Type == poke.Type2)
+                {
+                    moveText += "|'''";
+                }
+                moveText += "}}\r\n";
+            }
+            moveText += "{{MoveLevelEnd|" + poke.Name + "|" + type1 + "|";
+            if (poke.Type2 != null && poke.Type2 != "NONE")
+            {
+                moveText += type2;
+            }
+            else
+            {
+                moveText += type1;
+            }
+            moveText += "}}\r\n";
+            return moveText;
+        }
+
         public void savePokemon(Pokemon pkm)
         {
             if (pkm.IconStr != null && !pkm.IconStr.Equals("null"))

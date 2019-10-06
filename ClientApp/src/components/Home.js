@@ -38,7 +38,6 @@ export class Home extends Component {
         this.changeTab = this.changeTab.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.exportMoves = this.exportMoves.bind(this);
-        this.checkString = this.checkString.bind(this);
     }
 
     componentDidMount() {
@@ -730,7 +729,7 @@ export class Home extends Component {
                             <option>Moves</option>
                         </select>
                         <br />
-                        <textarea rows="15" cols="80" name="text" defaultValue={this.state.exportText} value={this.state.exportText}/>
+                        <textarea rows="15" cols="80" name="text" defaultValue={this.state.exportText} value={this.state.exportText} spellcheck="false"/>
                         <button type="button" className="exportButton" onClick={this.exportMoves}>Export</button>
                     </div>}
     
