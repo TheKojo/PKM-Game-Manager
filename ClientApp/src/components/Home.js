@@ -49,6 +49,7 @@ export class Home extends Component {
                 type1: data[0].type1, type2: data[0].type2, kind: data[0].kind,
                 hp: data[0].hp*/
             }));
+        document.body.style.backgroundColor = "#bcd4d1";
     }
 
     /*componentDidUpdate() {

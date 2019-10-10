@@ -11,6 +11,10 @@ export class Import extends Component {
         this.submitThing = this.submitThing.bind(this);
     }
 
+    componentDidMount() {
+        document.body.style.backgroundColor = "#bcd4d1";
+    }
+
     submitThing(event) {
         const data = new FormData(event.target);
         fetch('api/Import/SubmitPBS', {

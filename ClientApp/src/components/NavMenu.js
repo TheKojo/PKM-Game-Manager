@@ -28,6 +28,11 @@ export class NavMenu extends Component {
                 <Glyphicon glyph='import' /> Import PBS
               </NavItem>
             </LinkContainer>
+            <LinkContainer to={'/gallery'}>
+                <NavItem>
+                    <Glyphicon glyph='gallery' /> Gallery
+                </NavItem>
+            </LinkContainer>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

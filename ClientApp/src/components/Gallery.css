@@ -1,0 +1,61 @@
+﻿body {
+    font-family: 'Electrolize';
+    font-size: 16px;
+    color: #ffffff;
+    /*background-color: #0099b5;*/
+    
+}
+
+
+.pkm {
+    position: relative;
+    float: left;
+    background-color: #688c87;
+    width: 150px;
+    height: 150px;
+    margin: 5px;
+    /*
+    border: solid;
+    border-color: red;*/
+    text-align: center;
+}
+
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.sprite {
+    vertical-align: bottom;
+}
+
+.pkmName {
+    position: absolute;
+    text-align: center;
+    bottom: 0;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    width: 146px;
+    color: black;
+    background-color: white;
+    font-size: 12px;
+}
+
+.spriteDiv {
+    position: absolute;
+    /*border: solid;
+    border-color: blue;*/
+    width: 150px;
+    vertical-align: bottom;
+    bottom: 0;
+}
+
+.test{
+    position: relative;
+    top: 120px;
+}
+
+
