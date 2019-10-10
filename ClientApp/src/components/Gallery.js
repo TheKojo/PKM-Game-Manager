@@ -36,7 +36,7 @@ export class Gallery extends Component {
             .then(data => this.setState({
                 pkmList: data, isLoading: false
             }));
-        document.body.style.backgroundColor = "#0099b5";
+        document.body.style.backgroundColor = "#d1ebe7";
 
     }
 
@@ -61,7 +61,7 @@ export class Gallery extends Component {
 
                     {this.state.pkmList.map(pkm => (
                         <div key={pkm.pokemonId} >
-                            <div className='pkm'>
+                            <div className={'pkmBox ' + pkm.type1}>
                                 <div className='test'>
                                 <div className = 'spriteDiv'>
                                     <img src={require('./images/frontSprites/' + this.padNum(pkm.pokemonId) + '.png')} id={pkm.pokemonId} className='sprite' title={pkm.pokemonId} alt="pkm" />
