@@ -550,13 +550,17 @@ namespace pkm_game_manager.Models
             {
                 Entry(pkm).Property(x => x.FrontSprite).IsModified = false;
             }
+            Entry(pkm).Property(x => x.Exclude).IsModified = false;
+
             SaveChanges();
-            int test = 5;
         }
 
         public List<Pokemon> getPkm()
         {
-            var pkm = Pokemon.AsNoTracking().ToList();
+            //var pkm = Pokemon.AsNoTracking().ToList();
+
+            var pkm = Pokemon.Where(p => p.Exclude == false).AsNoTracking().ToList();
+
             return pkm;
         }
 

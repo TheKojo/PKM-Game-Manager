@@ -11,9 +11,9 @@
     position: relative;
     float: left;
     background-color: #688c87;
-    width: 150px;
-    height: 150px;
-    margin: 5px;
+    width: 120px;
+    height: 120px;
+    margin: 3px;
     /*
     border: solid;
     border-color: red;*/
@@ -39,7 +39,7 @@
     margin-left: 2px;
     margin-right: 2px;
     margin-bottom: 2px;
-    width: 146px;
+    width: 116px;
     color: black;
     background-color: white;
     font-size: 12px;
@@ -49,14 +49,14 @@
     position: absolute;
     /*border: solid;
     border-color: blue;*/
-    width: 150px;
+    width: 120px;
     vertical-align: bottom;
     bottom: 0;
 }
 
 .test{
     position: relative;
-    top: 120px;
+    top: 95px;
 }
 
 .NORMAL {

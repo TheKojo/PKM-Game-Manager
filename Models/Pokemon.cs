@@ -110,5 +110,7 @@ namespace pkm_game_manager.Models
 
         [NotMapped]
         public string BackSpriteStr { get; set; }
+
+        public bool Exclude { get; set; }
     }
 }
