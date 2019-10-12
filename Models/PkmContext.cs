@@ -18,17 +18,14 @@ namespace pkm_game_manager.Models
 
         public virtual DbSet<PokemonMove> PokemonMove { get; set; }
 
-        /*public PkmContext(string connectionString)
-        {
-            this.ConnectionString = connectionString;
-        }*/
+        public virtual DbSet<PokemonEvolution> PokemonEvolution { get; set; }
+
+        //For Pokemon in PBS but want to be excluded
+        List<string> ExcludeList = new List<string> { "Kangy", "Kangolian", "Lunalisk", "Lunaclipse", "Solgem", "Solaclipse", "Dragenta", "Dragoyle" };
 
         public PkmContext(DbContextOptions<PkmContext> options, IConfiguration configuration) : base(options)
         {
-            //int test = 1;
             this.ConnectionString = configuration.GetConnectionString("PkmContext");
-            //var thing = options.FindExtension<SqlServerOptionsExtension>()
-            //this.ConnectionString = options.Extensions.
         }
 
         private MySqlConnection GetConnection()
@@ -113,6 +110,7 @@ namespace pkm_game_manager.Models
         public List<Pokemon> parsePBS(string pbs)
         {
             List<Pokemon> pkmList = new List<Pokemon>();
+            List<PokemonEvolution> evoList = new List<PokemonEvolution>();
             //List<PokemonMove> pkmMoveList = new List<PokemonMove>;
 
             while (pbs.Length>0)
@@ -342,7 +340,6 @@ namespace pkm_game_manager.Models
                     pkm.Habitat = pbs.Substring(0, pbs.IndexOf("\r\n"));
                 }
 
-
                 //Kind
                 pbs = pbs.Substring(pbs.IndexOf("Kind"));
                 pbs = pbs.Substring(pbs.IndexOf("=") + 1);
@@ -351,8 +348,39 @@ namespace pkm_game_manager.Models
                 //Pokedex
                 pbs = pbs.Substring(pbs.IndexOf("Pokedex"));
                 pbs = pbs.Substring(pbs.IndexOf("=") + 1);
-                //pkm.DexEntry = pbs.Substring(0, pbs.IndexOf("\r\n"));
+                pkm.DexEntry = pbs.Substring(0, pbs.IndexOf("\r\n"));
 
+                //Evolutions
+                pbs = pbs.Substring(pbs.IndexOf("Evolutions"));
+                pbs = pbs.Substring(pbs.IndexOf("=") + 1);
+                while (pbs.IndexOf("\r\n") != 0 && pbs.Length>0)
+                {
+                    PokemonEvolution pkmEvo = new PokemonEvolution();
+                    //Pokemon evolving
+                    pkmEvo.PokemonId = pkm.PokemonId;
+
+                    //Pokemon it evolves into
+                    pkmEvo.EvoPoke = pbs.Substring(0, pbs.IndexOf(","));
+                    pbs = pbs.Substring(pbs.IndexOf(",")+1);
+
+                    //Evolution method
+                    pkmEvo.EvolutionId = pbs.Substring(0, pbs.IndexOf(","));
+                    pbs = pbs.Substring(pbs.IndexOf(",") + 1);
+
+                    //Parameter
+                    if (pkmEvo.EvolutionId == "Level")
+                    {
+                        distance = Math.Min(pbs.IndexOf(","), pbs.IndexOf("\r\n"));
+                        string level = pbs.Substring(0, distance);
+                        pkmEvo.Level = Int32.Parse(level); 
+                    }
+                    evoList.Add(pkmEvo);
+                    pbs = pbs.Substring(distance);
+                }
+
+                if (ExcludeList.Contains(pkm.Name)){
+                    pkm.Exclude = true;
+                }
 
                 pkmList.Add(pkm);
                 if (pbs.IndexOf("[") == -1)
@@ -360,8 +388,11 @@ namespace pkm_game_manager.Models
                     pbs = "";
                 }
             }
-
-
+            for (int i = 0; i < evoList.Count; i++)
+            {
+                PokemonEvolution.Add(evoList[i]);
+            }
+            SaveChanges();
             return pkmList;
         }
 
