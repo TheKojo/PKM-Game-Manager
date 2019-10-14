@@ -112,9 +112,10 @@ namespace pkm_game_manager.Models
             List<Pokemon> pkmList = new List<Pokemon>();
             List<PokemonEvolution> evoList = new List<PokemonEvolution>();
             //List<PokemonMove> pkmMoveList = new List<PokemonMove>;
-
+            int index = 0;
             while (pbs.Length>0)
             {
+                index++;
                 Pokemon pkm = new Pokemon();
                 pbs = pbs.Substring(pbs.IndexOf("["));
 
@@ -353,11 +354,11 @@ namespace pkm_game_manager.Models
                 //Evolutions
                 pbs = pbs.Substring(pbs.IndexOf("Evolutions"));
                 pbs = pbs.Substring(pbs.IndexOf("=") + 1);
-                while (pbs.IndexOf("\r\n") != 0 && pbs.Length>0)
+                while (pbs.IndexOf("\n") > 1 && pbs.Length>0)
                 {
                     PokemonEvolution pkmEvo = new PokemonEvolution();
                     //Pokemon evolving
-                    pkmEvo.PokemonId = pkm.PokemonId;
+                    pkmEvo.PokemonId = index;
 
                     //Pokemon it evolves into
                     pkmEvo.EvoPoke = pbs.Substring(0, pbs.IndexOf(","));
@@ -368,14 +369,30 @@ namespace pkm_game_manager.Models
                     pbs = pbs.Substring(pbs.IndexOf(",") + 1);
 
                     //Parameter
-                    if (pkmEvo.EvolutionId == "Level")
+                    if (pkmEvo.EvolutionId == "Level" || pkmEvo.EvolutionId == "LevelMale" || pkmEvo.EvolutionId == "LevelFemale")
                     {
                         distance = Math.Min(pbs.IndexOf(","), pbs.IndexOf("\r\n"));
                         string level = pbs.Substring(0, distance);
                         pkmEvo.Level = Int32.Parse(level); 
                     }
+                    else if (pkmEvo.EvolutionId == "Item" || pkmEvo.EvolutionId == "LevelHoldItem")
+                    {
+                        distance = Math.Min(pbs.IndexOf(","), pbs.IndexOf("\r\n"));
+                        string item = pbs.Substring(0, distance);
+                        pkmEvo.ItemId = item;
+                    }
+                    else if (pkmEvo.EvolutionId == "Happiness" || pkmEvo.EvolutionId == "HappinessDay" || pkmEvo.EvolutionId == "HappinessNight")
+                    {
+                        distance = Math.Min(pbs.IndexOf(","), pbs.IndexOf("\r\n"));
+                    }
+                    else if (pkmEvo.EvolutionId == "Location")
+                    {
+                        distance = Math.Min(pbs.IndexOf(","), pbs.IndexOf("\r\n"));
+                        string location = pbs.Substring(0, distance);
+                        pkmEvo.LocationId = Int32.Parse(location);
+                    }
                     evoList.Add(pkmEvo);
-                    pbs = pbs.Substring(distance);
+                    pbs = pbs.Substring(distance+1);
                 }
 
                 if (ExcludeList.Contains(pkm.Name)){
@@ -392,7 +409,7 @@ namespace pkm_game_manager.Models
             {
                 PokemonEvolution.Add(evoList[i]);
             }
-            SaveChanges();
+            //SaveChanges();
             return pkmList;
         }
 
