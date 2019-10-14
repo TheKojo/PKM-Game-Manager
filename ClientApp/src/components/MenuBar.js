@@ -10,9 +10,15 @@ export class MenuBar extends Component {
     render() {
         return (
             <div className="menuBar">
-                <Button href="/">Home</Button>
-                <Button href="/import">Import</Button>
-                <Button href="/gallery">Gallery</Button>
+                <Link to="/">
+                    <button className="menuButton">Home</button>
+                </Link>
+                <Link to="/import">
+                    <button className="menuButton">Import</button>
+                </Link>
+                <Link to="/gallery">
+                    <button className="menuButton">Gallery</button>
+                </Link>
             </div>
 
         );

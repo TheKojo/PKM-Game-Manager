@@ -11,3 +11,13 @@
     background-color: #0072b5;
     margin-bottom: 20px;
 }
+
+.menuButton {
+    position: relative;
+    margin: 5px;
+    top: 2px;
+    width: 100px;
+    background-color: #00b8c7;
+    border: none;
+    border-radius: 5px 5px 5px 5px;
+}
