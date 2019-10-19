@@ -10,50 +10,14 @@
 .pkmBox {
     position: relative;
     float: left;
-    background-color: #dce4e6;
+    background-color: #688c87;
     width: 120px;
     height: 120px;
-    margin-right: 5px;
-    margin-left: 6px;
-    margin-top: 6px;
-    margin-bottom: 5px;
+    margin: 3px;
     /*
     border: solid;
     border-color: red;*/
     text-align: center;
-    border-radius: 5px 5px 5px 5px;
-}
-
-
-.highlight1 {
-    position: absolute;
-    background-color: #e6eced;
-    height: 15px;
-    width: 120px;
-    border-radius: 5px 5px 0px 0px;
-}
-
-.highlight2 {
-    position: absolute;
-    background-color: #e0e7e9;
-    height: 16px;
-    width: 120px;
-    top: 15px;
-}
-
-.shadowContainer {
-    position: relative;
-    float: left;
-}
-
-.boxShadow {
-    position: absolute;
-    background-color: #344146;
-    width: 120px;
-    height: 120px;
-    z-index: -1;
-    right: 2px;
-    top: 10px;
     border-radius: 5px 5px 5px 5px;
 }
 
@@ -71,114 +35,105 @@ img {
 }
 
 .sprite {
-    position: relative;
     vertical-align: bottom;
-    
 }
 
 .pkmName {
     position: absolute;
+    text-align: center;
     bottom: 0;
     margin-left: 2px;
     margin-right: 2px;
     margin-bottom: 2px;
     width: 116px;
-    color: white;
-    background-color: #414d52;
+    color: black;
+    background-color: white;
     font-size: 12px;
     border-radius: 5px 5px 5px 5px;
 }
 
 .spriteDiv {
     position: absolute;
+    /*border: solid;
+    border-color: blue;*/
     width: 120px;
     vertical-align: bottom;
     bottom: 0;
 }
 
-.spriteContainer{
+.test{
     position: relative;
     top: 95px;
 }
 
-.shadow {
-    position: absolute;
-    height: 34px;
-    width: 95px;
-    background-color: #c6d2d5;
-    left: 12px;
-    top: -20px;
-    border-radius: 50% 50% 50% 50%;
-}
-
 .NORMAL {
-
+    background-color: #dedac1;
 }
 
 .GRASS {
-
+    background-color: #b2cf7c;
 }
 
 .FIRE {
-
+    background-color: #e8bbb5;
 }
 
 .WATER {
-
+    background-color: #b9e5ff;
 }
 
 .ELECTRIC {
-
+    background-color: #f5ecb0;
 }
 
 .FLYING {
-
+    background-color: #ccebff;
 }
 
 .BUG {
-
+    background-color: #dfedbb;
 }
 
 .POISON {
-
+    background-color: #b0a5c4;
 }
 
 .FIGHTING {
-
+    background-color: #d4ab9f;
 }
 
 .PSYCHIC {
-
+    background-color: #ffbfd9;
 }
 
 .DARK {
-
+    background-color: #969699;
 }
 
 .GHOST {
-
+    background-color: #9c8eab; /*#a39bab*/
 }
 
 .ICE {
-
+    background-color: #dfffff;
 }
 
 .ROCK {
-
+    background-color: #b8b1ab; /*#a6a09a*/
 }
 
 .GROUND {
-
+    background-color: #decab1;
 }
 
 .STEEL {
-
+    background-color: #cee0e0;
 }
 
 .DRAGON {
-
+    background-color: #bfa5c7;
 }
 
 .FAIRY {
-
+    background-color: #ffccdf;
 }

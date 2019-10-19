@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import './Gallery.css';
+import './GalleryTwo.css';
 import logo from './images/logo.png';
 import fSprites from './images/frontSprites/001.png';
 
@@ -36,7 +36,7 @@ export class Gallery extends Component {
             .then(data => this.setState({
                 pkmList: data, isLoading: false
             }));
-        document.body.style.backgroundColor = "#435c66";
+        document.body.style.backgroundColor = "#d1ebe7";
 
     }
 
@@ -62,18 +62,12 @@ export class Gallery extends Component {
                     {this.state.pkmList.map(pkm => (
                         <div key={pkm.pokemonId} >
                             <div className={'pkmBox ' + pkm.type1}>
-                                <div className='highlight1' />
-                                <div className='highlight2' />
-                                <div className='spriteContainer'>
-                                    <div className = 'spriteDiv'>
-                                        <img src={require('./images/frontSprites/' + this.padNum(pkm.pokemonId) + '.png')} id={pkm.pokemonId} className='sprite' title={pkm.pokemonId} alt="pkm" />
+                                <div className='test'>
+                                <div className = 'spriteDiv'>
+                                    <img src={require('./images/frontSprites/' + this.padNum(pkm.pokemonId) + '.png')} id={pkm.pokemonId} className='sprite' title={pkm.pokemonId} alt="pkm" />
                                     </div>
-                                    <div className = 'shadow'/>
                                 </div>
                                 <div className = 'pkmName'>{pkm.name}</div>
-                            </div>
-                            <div className='shadowContainer'>
-                                <div className='boxShadow' />
                             </div>
                         </div>
                     ))}
