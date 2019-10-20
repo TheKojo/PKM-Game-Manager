@@ -59,7 +59,7 @@
 
 img {
     position: relative;
-    z-index: 1;
+    z-index: 2;
 }
 
 
@@ -76,17 +76,94 @@ img {
     
 }
 
+.nameContainer {
+    position: relative;
+    float: left;
+    right: 125px;
+    top: 107px;
+    z-index: 1;
+}
+
 .pkmName {
     position: absolute;
-    bottom: 0;
+    
     margin-left: 2px;
     margin-right: 2px;
     margin-bottom: 2px;
     width: 116px;
+    padding-left: 4px;
     color: white;
     background-color: #414d52;
     font-size: 12px;
     border-radius: 5px 5px 5px 5px;
+}
+
+.typeContainer {
+    position: relative;
+    float: left;
+    right: 30px;
+    top: 109px;
+}
+
+.typeBox1 {
+    position: absolute;
+    width: 10px;
+    height: 13px;
+    z-index: 1;
+    border-bottom: solid;
+    border-left: solid;
+    border-top: solid;
+    border-color: #617278;
+    border-width: 1px;
+}
+
+.typeBox1H {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: 9px;
+    height: 1px;
+    z-index: 1;
+}
+
+.typeBox1S {
+    position: absolute;
+    top: 8px;
+    left: 1px;
+    width: 9px;
+    height: 4px;
+    z-index: 1;
+}
+
+.typeBox2 {
+    position: absolute;
+    width: 10px;
+    height: 13px;
+    z-index: 1;
+    left: 10px;
+    border-bottom: solid;
+    border-right: solid;
+    border-top: solid;
+    border-color: #617278;
+    border-width: 1px;
+}
+
+.typeBox2H {
+    position: absolute;
+    top: 1px;
+    left: 10px;
+    width: 9px;
+    height: 1px;
+    z-index: 1;
+}
+
+.typeBox2S {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    width: 9px;
+    height: 4px;
+    z-index: 1;
 }
 
 .spriteDiv {
@@ -111,74 +188,224 @@ img {
     border-radius: 50% 50% 50% 50%;
 }
 
-.NORMAL {
 
+/*Type Colors
+    x = base color
+    x + x = highlight color
+    x + x + x = shaded color
+*/
+.NORMAL {
+    background-color: #c4c4a7;
+}
+
+.NORMAL + .NORMAL {
+    background-color: #d1d1ba;
+}
+
+.NORMAL + .NORMAL + .NORMAL {
+    background-color: #adad95;
 }
 
 .GRASS {
+    background-color: #40d42c;
+}
 
+.GRASS + .GRASS {
+    background-color: #7cd42c;
+}
+
+.GRASS + .GRASS + .GRASS {
+    background-color: #1ec92c;
 }
 
 .FIRE {
+    background-color: #f08030;
+}
 
+.FIRE + .FIRE {
+    background-color: #f09e30;
+}
+
+.FIRE + .FIRE + .FIRE {
+    background-color: #e35724;
 }
 
 .WATER {
+    background-color: #44aff0;
+}
 
+.WATER + .WATER {
+    background-color: #44c1f0;
+}
+
+.WATER + .WATER + .WATER {
+    background-color: #4484f0;
 }
 
 .ELECTRIC {
+    background-color: #f8d030;
+}
 
+.ELECTRIC + .ELECTRIC {
+background-color: #f7d83e;
+}
+
+.ELECTRIC + .ELECTRIC + .ELECTRIC {
+    background-color: #e8ad2c;
 }
 
 .FLYING {
+    background-color: #a8aff0;
+}
 
+.FLYING + .FLYING {
+    background-color: #a8bcf0;
+}
+
+.FLYING + .FLYING + .FLYING {
+    background-color: #9a98db;
 }
 
 .BUG {
+    background-color: #a8b820;
+}
 
+.BUG + .BUG {
+    background-color: #b5cf23;
+}
+
+.BUG + .BUG + .BUG {
+    background-color: #84961a;
 }
 
 .POISON {
+    background-color: #a040a0
+}
 
+.POISON + .POISON {
+    background-color: #b440a0;
+}
+
+.POISON + .POISON + .POISON {
+    background-color: #7d297d;
 }
 
 .FIGHTING {
+    background-color: #c03028;
+}
 
+.FIGHTING + .FIGHTING {
+    background-color: #c05528;
+}
+
+.FIGHTING + .FIGHTING + .FIGHTING {
+    background-color: #91241f;
 }
 
 .PSYCHIC {
+    background-color: #f85888
+}
 
+.PSYCHIC + .PSYCHIC {
+    background-color: #f86788
+}
+
+.PSYCHIC + .PSYCHIC + .PSYCHIC {
+    background-color: #db3755;
 }
 
 .DARK {
+    background-color: #705848
+}
 
+.DARK + .DARK {
+    background-color: #806953
+}
+
+.DARK + .DARK + .DARK {
+    background-color: #574437
 }
 
 .GHOST {
+    background-color: #705898
+}
 
+.GHOST + .GHOST {
+    background-color: #7f6099
+}
+
+.GHOST + .GHOST + .GHOST {
+    background-color: #573d80
 }
 
 .ICE {
+    background-color: #96e3e3
+}
 
+.ICE + .ICE {
+    background-color: #72bcd8
+}
+
+.ICE + .ICE + .ICE {
+    background-color: #72bcd8
 }
 
 .ROCK {
+    background-color: #9c652f
+}
 
+.ROCK + .ROCK {
+    background-color: #b37239
+}
+
+.ROCK + .ROCK + .ROCK {
+    background-color: #734b22
 }
 
 .GROUND {
+    background-color: #deb676
+}
 
+.GROUND + .GROUND {
+    background-color: #deb676
+}
+
+.GROUND + .GROUND + .GROUND {
+    background-color: #cf9461
 }
 
 .STEEL {
+    background-color: #d5d5db
+}
 
+.STEEL + .STEEL {
+    background-color: #e3e3e8
+}
+
+.STEEL + .STEEL + .STEEL {
+    background-color: #c0c0cf
 }
 
 .DRAGON {
+    background-color: #7038f8
+}
 
+.DRAGON + .DRAGON {
+    background-color: #8638f8
+}
+
+.DRAGON + .DRAGON + .DRAGON {
+    background-color: #592bc4
 }
 
 .FAIRY {
+    background-color: #ffaec9
+}
 
+.FAIRY + .FAIRY {
+    background-color: #ffbec9
+}
+
+.FAIRY + .FAIRY + .FAIRY {
+    background-color: #ff82ac
 }

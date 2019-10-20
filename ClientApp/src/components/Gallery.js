@@ -28,6 +28,7 @@ export class Gallery extends Component {
         };
 
         this.padNum = this.padNum.bind(this);
+        this.typeColor = this.typeColor.bind(this);
     }
 
     componentDidMount() {
@@ -52,6 +53,15 @@ export class Gallery extends Component {
         }
     }
 
+    typeColor(val) {
+        if (val.type2 === null || val.type2 === 'NONE') {
+            return val.type1;
+        }
+        else {
+            return val.type2;
+        }
+    }
+
     render() {
         return (
             <div className ='galleryBody'>
@@ -61,7 +71,7 @@ export class Gallery extends Component {
 
                     {this.state.pkmList.map(pkm => (
                         <div key={pkm.pokemonId} >
-                            <div className={'pkmBox ' + pkm.type1}>
+                            <div className={'pkmBox '}>
                                 <div className='highlight1' />
                                 <div className='highlight2' />
                                 <div className='spriteContainer'>
@@ -70,7 +80,21 @@ export class Gallery extends Component {
                                     </div>
                                     <div className = 'shadow'/>
                                 </div>
-                                <div className = 'pkmName'>{pkm.name}</div>
+                            </div>
+                            <div className='nameContainer'>
+                                <div className='pkmName'>{pkm.name}</div>
+                            </div>
+                            <div className='typeContainer'>
+                                <div className='1Container'>
+                                    <div className={'typeBox1 ' + pkm.type1} />
+                                    <div className={'typeBox1H ' + pkm.type1} />
+                                    <div className={'typeBox1S ' + pkm.type1} />
+                                </div>
+                                <div className='2Container'>
+                                    <div className={'typeBox2 ' + this.typeColor(pkm)} />
+                                    <div className={'typeBox2H ' + this.typeColor(pkm)} />
+                                    <div className={'typeBox2S ' + this.typeColor(pkm)} />
+                                </div>
                             </div>
                             <div className='shadowContainer'>
                                 <div className='boxShadow' />
