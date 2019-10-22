@@ -38,6 +38,8 @@ export class Info extends Component {
         this.changeTab = this.changeTab.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.exportMoves = this.exportMoves.bind(this);
+        this.padNum = this.padNum.bind(this);
+        this.getNeighbor = this.getNeighbor.bind(this);
     }
 
     componentDidMount() {
@@ -57,11 +59,6 @@ export class Info extends Component {
         var value = target.value;
 
         reader.onloadend = (event) => {
-            //var arr = new Uint8Array(reader.result);
-            /*this.setState({
-                icon: Array.from(arr)
-            });*/
-
             var str = reader.result;
             this.setState({
                 [name]: str
@@ -73,15 +70,9 @@ export class Info extends Component {
         }
         if (name === "iconStr" || name === "artworkStr" || name === "frontSpriteStr" || name === "backSpriteStr") {
             let file = target.files[0];
-            //reader.readAsArrayBuffer(file);
             if (typeof file !== 'undefined') {
                 reader.readAsDataURL(file);
             }
-            /*else {
-                this.setState({
-                    [name]: null
-                });
-            }*/
             
         }
         else {
@@ -404,6 +395,44 @@ export class Info extends Component {
 
     }
 
+    padNum(val) {
+        if (val < 10) {
+            return '00' + val;
+        }
+        else if (val < 100) {
+            return '0' + val;
+        }
+        else {
+            return val;
+        }
+    }
+
+    getNeighbor(val) {
+        var par = this.props.match.params.pokeIndex;
+        var result = ["", "000"];
+        var pkm = null;
+        switch (val) {
+            case 0:
+                if (par >= 2) {
+                    pkm = this.state.pkmList[par - 2];
+                    result = [pkm.name, this.padNum(pkm.pokemonId)];
+                }
+                break;
+            case 1:
+                pkm = this.state.pkmList[par - 1];
+                result = [pkm.name, this.padNum(pkm.pokemonId)];
+                break;
+            case 2:
+                if (par < this.state.pkmList.length) {
+                    pkm = this.state.pkmList[par];
+                    result = [pkm.name, this.padNum(pkm.pokemonId)];
+                }
+                break;
+        }
+        
+        return result;
+    }
+
     render() {
         const { pkmList, isLoading, curIndex, name, internalName,
             type1, type2,
@@ -411,13 +440,57 @@ export class Info extends Component {
             evhp, evAttack, evDefense, evSpAtk, evSpDef, evSpeed,
             kind, growthRate, genderRate, eggGroup1, eggGroup2,
             artwork, icon, frontSprite, backSprite, exportText} = this.state;
-
+        const curPoke = this.state.pkmList[this.props.match.params.pokeIndex-1];
         if (isLoading) {
             return <p>Loading ...</p>;
         }
 
         return (
             <div>
+                <link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' />
+                <div className='neighborBar'>
+                    <div className='prevPkm'>
+                        {this.getNeighbor(0)[1]}{" "}
+                        {this.getNeighbor(0)[0]}
+                        <img src={require('./images/icons/' + this.getNeighbor(0)[1] + '.png')} className='icon' alt="icon" />
+                    </div>
+                    <div className='curPkm'>
+                        {this.getNeighbor(1)[1]}{" "} 
+                        {this.getNeighbor(1)[0]}
+                        <img src={require('./images/icons/' + this.getNeighbor(1)[1] + '.png')} className='icon' alt="icon" />
+                    </div>
+                    <div className='nextPkm'>
+                        {this.getNeighbor(2)[1]}{" "} 
+                        {this.getNeighbor(2)[0]}
+                        <img src={require('./images/icons/' + this.getNeighbor(2)[1] + '.png')} className='icon' alt="icon" />
+                    </div>
+                </div>
+                <div className='pokeInfo'>
+                    <div className='dexNum'>
+                        {this.getNeighbor(1)[1]}
+                    </div>
+                    <div className='name'>
+                        {curPoke.name}
+                    </div>
+                    <div className='species'>
+                        {curPoke.kind} Pokemon
+                    </div>
+                    <div className='frontSprite'>
+                        <img src={require('./images/frontSprites/' + this.getNeighbor(1)[1] + '.png')} className='sprite' alt="sprite" />
+                    </div>
+                    <div className='type1'>
+                        {this.capitalize(curPoke.type1)}
+                    </div>
+                    <div className='type2'>
+                        {this.capitalize(curPoke.type2)}
+                    </div>
+                    <canvas id="statCanvas" width="202" height="140" />
+                </div>
+                <div className='pokeMoves'>
+                    <div className='levelMoves' />
+                    <div className='tmMoves' />
+                    <div className='eggMoves'/>
+                </div>
             </div>    
 
         );

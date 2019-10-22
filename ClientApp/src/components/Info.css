@@ -1,3 +1,17 @@
 ﻿body {
+    font-family: 'Electrolize';
+    font-size: 16px;
+}
 
+.neighborBar {
+    position: relative;
+    float: left;
+    background-color: #f7fafa;
+    color: #344146;
+    width: 100%
+}
+
+canvas {
+    background-color: #becbcf;
+    border-radius: 2px;
 }

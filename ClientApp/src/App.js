@@ -15,7 +15,7 @@ export default class App extends Component {
         <Route exact path='/' component={Home} />
         <Route path='/import' component={Import} />
         <Route path='/gallery' component={Gallery} />
-        <Route path='/info/:pokemonId' component={Info} />
+        <Route path='/info/:pokeIndex' component={Info} />
       </Layout>
     );
   }

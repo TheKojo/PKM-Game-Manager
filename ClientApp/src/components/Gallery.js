@@ -2,7 +2,6 @@
 import { Link } from 'react-router-dom';
 import './Gallery.css';
 import logo from './images/logo.png';
-import fSprites from './images/frontSprites/001.png';
 
 export class Gallery extends Component {
 
