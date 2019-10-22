@@ -4,6 +4,7 @@ import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import { Import } from './components/Import';
 import { Gallery } from './components/Gallery';
+import { Info } from './components/Info';
 
 export default class App extends Component {
   displayName = App.name
@@ -14,6 +15,7 @@ export default class App extends Component {
         <Route exact path='/' component={Home} />
         <Route path='/import' component={Import} />
         <Route path='/gallery' component={Gallery} />
+        <Route path='/info/:pokemonId' component={Info} />
       </Layout>
     );
   }

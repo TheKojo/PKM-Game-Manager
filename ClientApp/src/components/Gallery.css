@@ -6,6 +6,17 @@
     
 }
 
+a {
+    color: white;
+}
+
+a:hover {
+    color: white;
+}
+
+a:focus{
+    color: white;
+}
 
 .pkmBox {
     position: relative;
@@ -86,7 +97,6 @@ img {
 
 .pkmName {
     position: absolute;
-    
     margin-left: 2px;
     margin-right: 2px;
     margin-bottom: 2px;
@@ -96,6 +106,25 @@ img {
     background-color: #414d52;
     font-size: 12px;
     border-radius: 5px 5px 5px 5px;
+}
+
+.numContainer {
+    position: relative;
+    float: left;
+    top: 9px;
+    right: 123px;
+    text-align: center;
+}
+
+.pkmNum {
+    position: absolute;
+    background-color: #414d52;
+    width: 24px;
+    height: 15px;
+    font-size: 10px;
+    padding-top: 1px;
+    border-radius: 5px 5px 5px 5px;
+    z-index: 1;
 }
 
 .typeContainer {

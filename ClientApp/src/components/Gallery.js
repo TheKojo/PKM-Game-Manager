@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './Gallery.css';
 import logo from './images/logo.png';
 import fSprites from './images/frontSprites/001.png';
@@ -29,6 +30,7 @@ export class Gallery extends Component {
 
         this.padNum = this.padNum.bind(this);
         this.typeColor = this.typeColor.bind(this);
+        this.pokeSelect = this.pokeSelect.bind(this);
     }
 
     componentDidMount() {
@@ -62,6 +64,10 @@ export class Gallery extends Component {
         }
     }
 
+    pokeSelect(val) {
+
+    }
+
     render() {
         return (
             <div className ='galleryBody'>
@@ -71,7 +77,8 @@ export class Gallery extends Component {
 
                     {this.state.pkmList.map(pkm => (
                         <div key={pkm.pokemonId} >
-                            <div className={'pkmBox '}>
+                            <Link to={"/info/" + pkm.pokemonId} style={{ textDecoration: 'none' }}>
+                            <div className={'pkmBox '} onClick={() => this.pokeSelect(pkm.pokemonId)}>
                                 <div className='highlight1' />
                                 <div className='highlight2' />
                                 <div className='spriteContainer'>
@@ -80,7 +87,8 @@ export class Gallery extends Component {
                                     </div>
                                     <div className = 'shadow'/>
                                 </div>
-                            </div>
+                                </div>
+                            
                             <div className='nameContainer'>
                                 <div className='pkmName'>{pkm.name}</div>
                             </div>
@@ -96,6 +104,10 @@ export class Gallery extends Component {
                                     <div className={'typeBox2S ' + this.typeColor(pkm)} />
                                 </div>
                             </div>
+                            <div className='numContainer'>
+                                <div className='pkmNum'>{this.padNum(pkm.pokemonId)}</div>
+                                </div>
+                            </Link>
                             <div className='shadowContainer'>
                                 <div className='boxShadow' />
                             </div>
