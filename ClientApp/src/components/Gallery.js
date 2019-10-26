@@ -86,7 +86,7 @@ export class Gallery extends Component {
                                     </div>
                                     <div className = 'shadow'/>
                                 </div>
-                                </div>
+                            </div>
                             
                             <div className='nameContainer'>
                                 <div className='pkmName'>{pkm.name}</div>

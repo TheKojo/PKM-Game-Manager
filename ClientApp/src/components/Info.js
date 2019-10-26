@@ -445,23 +445,37 @@ export class Info extends Component {
             return <p>Loading ...</p>;
         }
 
+        let type2Render;
+        if (this.capitalize(curPoke.type2) !== "None") {
+            type2Render = <div className='type2'>{this.capitalize(curPoke.type2)}</div>;
+        }
+        else {
+            type2Render = <div />;
+        }
+
         return (
             <div>
                 <link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' />
                 <div className='neighborBar'>
-                    <div className='prevPkm'>
-                        {this.getNeighbor(0)[1]}{" "}
-                        {this.getNeighbor(0)[0]}
+                    <div className='prevPkmContainer'>
+                        <div className='prevBox'>
+                            {this.getNeighbor(0)[1]}{" "} 
+                            {this.getNeighbor(0)[0]}
+                        </div>
                         <img src={require('./images/icons/' + this.getNeighbor(0)[1] + '.png')} className='icon' alt="icon" />
                     </div>
-                    <div className='curPkm'>
-                        {this.getNeighbor(1)[1]}{" "} 
-                        {this.getNeighbor(1)[0]}
+                    <div className='curPkmContainer'>
+                        <div className='curBox'>
+                            {this.getNeighbor(1)[1]}{" "} 
+                            {this.getNeighbor(1)[0]}
+                        </div>
                         <img src={require('./images/icons/' + this.getNeighbor(1)[1] + '.png')} className='icon' alt="icon" />
                     </div>
-                    <div className='nextPkm'>
-                        {this.getNeighbor(2)[1]}{" "} 
-                        {this.getNeighbor(2)[0]}
+                    <div className='nextPkmContainer'>
+                        <div className='nextBox'>
+                            {this.getNeighbor(2)[1]}{" "} 
+                            {this.getNeighbor(2)[0]}
+                        </div>
                         <img src={require('./images/icons/' + this.getNeighbor(2)[1] + '.png')} className='icon' alt="icon" />
                     </div>
                 </div>
@@ -475,16 +489,45 @@ export class Info extends Component {
                     <div className='species'>
                         {curPoke.kind} Pokemon
                     </div>
-                    <div className='frontSprite'>
-                        <img src={require('./images/frontSprites/' + this.getNeighbor(1)[1] + '.png')} className='sprite' alt="sprite" />
+                    <div className='spriteContainer'>
+                        <div className='frontSprite'>
+                            <img src={require('./images/frontSprites/' + this.getNeighbor(1)[1] + '.png')} className='sprite' alt="sprite" />
+                        </div>
+                        <div className='shadow' />
                     </div>
-                    <div className='type1'>
-                        {this.capitalize(curPoke.type1)}
+                    <div className='typeContainer'>
+                        <div className='type1'>
+                            {this.capitalize(curPoke.type1)}
+                        </div>
+                        {type2Render}
                     </div>
-                    <div className='type2'>
-                        {this.capitalize(curPoke.type2)}
+                    <div className='abilityContainer'>
+                        <div className='ability1'>
+                            <b>AB1</b> description
+                        </div>
+                        <div className='ability2'>
+                            <b>AB2</b> description
+                        </div>
+                        <div className='hiddenAbility'>
+                            <b>ABHA</b> description
+                        </div>
                     </div>
-                    <canvas id="statCanvas" width="202" height="140" />
+                    <canvas id="statCanvas" width="236" height="128" />
+                    <div className='extraInfo'>
+                        <div className='infoCol'>
+                            <div className='height'><b>Height</b>{curPoke.height}</div>
+                            <div className='weight'><b>Weight</b>{curPoke.weight}</div>
+                            <div className='eggGroups'><b>Egg Group</b>{curPoke.eggGroup1}/{curPoke.eggGroup2}</div>
+                            <div className='hatchTime'><b>Hatch Time</b>{curPoke.hatchSteps}</div>
+                            <div className='gender'><b>Gender</b>{curPoke.genderRate}</div>
+                        </div>
+                        <div className='infoCol'>
+                            <div className='catchRate'><b>Catch Rate</b>{curPoke.catchRate}</div>
+                            <div className='happiness'><b>EXP Yield</b>{curPoke.happiness}</div>
+                            <div className='exp'><b>EXP Yield</b>{curPoke.baseEXP}</div>
+                            <div className='growthRate'><b>Growth Rate</b>{curPoke.rareness}</div>
+                        </div>
+                    </div>
                 </div>
                 <div className='pokeMoves'>
                     <div className='levelMoves' />
