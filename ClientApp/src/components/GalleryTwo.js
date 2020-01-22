@@ -3,7 +3,7 @@ import './GalleryTwo.css';
 import logo from './images/logo.png';
 import fSprites from './images/frontSprites/001.png';
 
-export class Gallery extends Component {
+export class GalleryTwo extends Component {
 
     constructor() {
         super();
