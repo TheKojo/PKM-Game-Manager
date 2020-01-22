@@ -3,7 +3,7 @@
     font-size: 16px;
 }
 
-.neighborBar {
+.info-neighborBar {
     top: -20px;
     position: relative;
     float: left;
@@ -13,24 +13,56 @@
     height: 62px;
 }
 
-.prevPkmContainer {
+.info-prevPkmContainer {
     position: absolute;
     width: 183px;
     height: 37px;
     border: solid;
+    margin-left: 50px;
+    margin-top: 14px;
     
 }
 
-.prevBox {
+.info-prevBox {
     position: relative;
     width: 103px;
     height: 37px;
     background-color: #becbcf;
-    border-radius: 5px;
+    border-radius: 0px 5px 5px 0px;
     float: right;
 }
 
-.curPkmContainer {
+.info-boxTriL {
+    position: absolute;
+    border-bottom: 29px solid #becbcf;
+    border-left: 29px solid transparent;
+    left: 45px;
+}
+
+.info-arrowRectL {
+    position: absolute;
+    width: 65px;
+    height: 8px;
+    background-color: #becbcf;
+    top: 29px;
+    left: 9px;
+}
+
+.info-arrowTriL {
+    position: absolute;
+    border-bottom: 15px solid #becbcf;
+    border-left: 15px solid transparent;
+    top: 22px;
+    left: -6px;
+}
+
+.info-iconPrev {
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+}
+
+.info-curPkmContainer {
     position: absolute;
     width: 162px;
     height: 53px;
@@ -39,32 +71,110 @@
     margin-left: -81px;
 }
 
-.curBox {
+.info-curBox {
     position: relative;
     width: 162px;
-    height: 37px;
+    height: 30px;
+    color: #f7fafa;
     background-color: #344146;
-    border-radius: 5px;
+    border-radius: 0px 0px 5px 5px;
+    top: 20px;
 }
 
-.nextPkmContainer {
+.info-rectCornerL {
+    position: absolute;
+    width: 36px;
+    height: 7px;
+    background-color: #344146;
+    border-radius: 5px 0px 0px 0px;
+    bottom: 27px;
+}
+
+
+.info-triCornerL {
+    position: absolute;
+    border-bottom: 7px solid #344146;
+    border-right: 7px solid transparent;
+    left: 36px;
+    bottom: 27px;
+}
+
+
+.info-rectCornerR {
+    position: absolute;
+    width: 36px;
+    height: 7px;
+    background-color: #344146;
+    border-radius: 0px 5px 0px 0px;
+    bottom: 27px;
+    left: 126px;
+}
+
+.info-triCornerR {
+    position: absolute;
+    border-bottom: 7px solid #344146;
+    border-left: 7px solid transparent;
+    left: 119px;
+    bottom: 27px;
+}
+
+.info-iconCur{
+    position: absolute;
+    bottom: 30px;
+    left: 60px;
+}
+
+.info-nextPkmContainer {
     position: absolute;
     width: 183px;
     height: 37px;
     float: right;
     border: solid;
     right: 0;
+    margin-right: 50px;
+    margin-top: 14px;
 }
 
-.nextBox {
+.info-nextBox {
     position: relative;
     width: 103px;
     height: 37px;
     background-color: #becbcf;
-    border-radius: 5px;
+    border-radius: 5px 0px 0px 5px;
 }
 
-.pokeInfo {
+.info-boxTriR {
+    position: absolute;
+    border-bottom: 29px solid #becbcf;
+    border-right: 29px solid transparent;
+    left: 103px;
+    bottom: 8px;
+}
+
+.info-arrowRectR {
+    position: absolute;
+    width: 65px;
+    height: 8px;
+    background-color: #becbcf;
+    top: 29px;
+    left: 103px;
+}
+
+.info-arrowTriR {
+    position: absolute;
+    border-bottom: 15px solid #becbcf;
+    border-right: 15px solid transparent;
+    top: 22px;
+    left: 168px;
+}
+
+.info-iconNext {
+    position: absolute;
+    bottom: 5px;
+    left: 130px;
+}
+
+.info-pokeInfo {
     position: relative;
     top: 80px;
     height: 267px;
@@ -76,12 +186,58 @@
     margin-right: 5px;
 }
 
-canvas {
-    background-color: #becbcf;
-    border-radius: 2px;
+.info-dexNum {
+    position: absolute;
+    width: 49px;
+    height: 32px;
+    background-color: #414d52;
+    border-radius: 5px;
+    margin-left: 5px;
+    top: 6px;
 }
 
-.shadow {
+.info-name {
+    position: absolute;
+    width: 139px;
+    height: 32px;
+    background-color: #414d52;
+    border-radius: 5px;
+    margin-left: 5px;
+    top: 6px;
+    left: 55px;
+}
+
+.info-species {
+    position: absolute;
+    width: 236px;
+    height: 32px;
+    background-color: #414d52;
+    border-radius: 5px;
+    margin-left: 5px;
+    top: 6px;
+    left: 200px;
+}
+
+canvas {
+    position: absolute;
+    background-color: #becbcf;
+    border-radius: 2px;
+    bottom: 90px;
+    left: 205px;
+    border-radius: 5px;
+}
+
+.info-spriteContainer{
+    position: relative;
+    width: 200px;
+    height: 100px;
+}
+
+.info-frontSprite{
+    position: absolute;
+}
+
+.info-shadow {
     position: absolute;
     height: 34px;
     width: 95px;
@@ -89,4 +245,24 @@ canvas {
     left: 12px;
     top: -20px;
     border-radius: 50% 50% 50% 50%;
+}
+
+.info-typeContainer {
+    position: relative;
+    width: 166px;
+    height: 31px;
+}
+
+.info-abilityContainer{
+    position: relative;
+    width: 419px;
+    height: 68px;
+    padding-left: 15px;
+}
+
+.info-abilityBox {
+    position: absolute;
+    width: 419px;
+    height: 64px;
+    background-color: #becbcf;
 }

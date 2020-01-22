@@ -447,7 +447,7 @@ export class Info extends Component {
 
         let type2Render;
         if (this.capitalize(curPoke.type2) !== "None") {
-            type2Render = <div className='type2'>{this.capitalize(curPoke.type2)}</div>;
+            type2Render = <div className='info-type2'>{this.capitalize(curPoke.type2)}</div>;
         }
         else {
             type2Render = <div />;
@@ -456,83 +456,94 @@ export class Info extends Component {
         return (
             <div>
                 <link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' />
-                <div className='neighborBar'>
-                    <div className='prevPkmContainer'>
-                        <div className='prevBox'>
+                <div className='info-neighborBar'>
+                    <div className='info-prevPkmContainer'>
+                        <div className='info-prevBox'>
                             {this.getNeighbor(0)[1]}{" "} 
                             {this.getNeighbor(0)[0]}
                         </div>
-                        <img src={require('./images/icons/' + this.getNeighbor(0)[1] + '.png')} className='icon' alt="icon" />
+                        <div className='info-boxTriL' />
+                        <div className='info-arrowRectL' />
+                        <div className='info-arrowTriL' />
+                        <img src={require('./images/icons/' + this.getNeighbor(0)[1] + '.png')} className='info-iconPrev' alt="icon" />
                     </div>
-                    <div className='curPkmContainer'>
-                        <div className='curBox'>
+                    <div className='info-curPkmContainer'>
+                        <div className='info-curBox'>
                             {this.getNeighbor(1)[1]}{" "} 
                             {this.getNeighbor(1)[0]}
                         </div>
-                        <img src={require('./images/icons/' + this.getNeighbor(1)[1] + '.png')} className='icon' alt="icon" />
+                        <div className='info-rectCornerL' />
+                        <div className='info-triCornerL' />
+                        <div className='info-rectCornerR' />
+                        <div className='info-triCornerR' />
+                        <img src={require('./images/icons/' + this.getNeighbor(1)[1] + '.png')} className='info-iconCur' alt="icon" />
                     </div>
-                    <div className='nextPkmContainer'>
-                        <div className='nextBox'>
+                    <div className='info-info-nextPkmContainer'>
+                        <div className='info-info-nextBox'>
                             {this.getNeighbor(2)[1]}{" "} 
                             {this.getNeighbor(2)[0]}
+                            <div className='info-boxTriR' />
+                            <div className='info-arrowRectR' />
+                            <div className='info-arrowTriR' />
                         </div>
-                        <img src={require('./images/icons/' + this.getNeighbor(2)[1] + '.png')} className='icon' alt="icon" />
+                        <img src={require('./images/icons/' + this.getNeighbor(2)[1] + '.png')} className='info-iconNext' alt="icon" />
                     </div>
                 </div>
-                <div className='pokeInfo'>
-                    <div className='dexNum'>
+                <div className='info-pokeInfo'>
+                    <div className='info-dexNum'>
                         {this.getNeighbor(1)[1]}
                     </div>
-                    <div className='name'>
+                    <div className='info-name'>
                         {curPoke.name}
                     </div>
-                    <div className='species'>
+                    <div className='info-species'>
                         {curPoke.kind} Pokemon
                     </div>
-                    <div className='spriteContainer'>
-                        <div className='frontSprite'>
-                            <img src={require('./images/frontSprites/' + this.getNeighbor(1)[1] + '.png')} className='sprite' alt="sprite" />
+                    <div className='info-spriteContainer'>
+                        <div className='info-frontSprite'>
+                            <img src={require('./images/frontSprites/' + this.getNeighbor(1)[1] + '.png')} className='info-frontSprite' alt="sprite" />
                         </div>
-                        <div className='shadow' />
+                        <div className='info-shadow' />
                     </div>
-                    <div className='typeContainer'>
-                        <div className='type1'>
+                    <div className='info-typeContainer'>
+                        <div className='info-type1'>
                             {this.capitalize(curPoke.type1)}
                         </div>
                         {type2Render}
                     </div>
-                    <div className='abilityContainer'>
-                        <div className='ability1'>
+                    <div className='info-abilityContainer'>
+                        <div className='info-abilityBox'/>
+                        <div className='info-ability1'>
                             <b>AB1</b> description
                         </div>
-                        <div className='ability2'>
+                        <div className='info-ability2'>
                             <b>AB2</b> description
                         </div>
-                        <div className='hiddenAbility'>
+                        <div className='info-hiddenAbility'>
                             <b>ABHA</b> description
                         </div>
                     </div>
                     <canvas id="statCanvas" width="236" height="128" />
-                    <div className='extraInfo'>
-                        <div className='infoCol'>
-                            <div className='height'><b>Height</b>{curPoke.height}</div>
-                            <div className='weight'><b>Weight</b>{curPoke.weight}</div>
-                            <div className='eggGroups'><b>Egg Group</b>{curPoke.eggGroup1}/{curPoke.eggGroup2}</div>
-                            <div className='hatchTime'><b>Hatch Time</b>{curPoke.hatchSteps}</div>
-                            <div className='gender'><b>Gender</b>{curPoke.genderRate}</div>
+                    <div className='info-extraInfo'>
+                        <div className='info-infoCol'>
+                            <div className='info-height'><b>Height</b>{curPoke.height}</div>
+                            <div className='info-weight'><b>Weight</b>{curPoke.weight}</div>
+                            <div className='info-eggGroups'><b>Egg Group</b>{curPoke.eggGroup1}/{curPoke.eggGroup2}</div>
+                            <div className='info-hatchTime'><b>Hatch Time</b>{curPoke.hatchSteps}</div>
+                            <div className='info-gender'><b>Gender</b>{curPoke.genderRate}</div>
                         </div>
-                        <div className='infoCol'>
-                            <div className='catchRate'><b>Catch Rate</b>{curPoke.catchRate}</div>
-                            <div className='happiness'><b>EXP Yield</b>{curPoke.happiness}</div>
-                            <div className='exp'><b>EXP Yield</b>{curPoke.baseEXP}</div>
-                            <div className='growthRate'><b>Growth Rate</b>{curPoke.rareness}</div>
+                        <div className='info-infoCol'>
+                            <div className='info-catchRate'><b>Catch Rate</b>{curPoke.catchRate}</div>
+                            <div className='info-happiness'><b>EXP Yield</b>{curPoke.happiness}</div>
+                            <div className='info-exp'><b>EXP Yield</b>{curPoke.baseEXP}</div>
+                            <div className='info-growthRate'><b>Growth Rate</b>{curPoke.rareness}</div>
                         </div>
                     </div>
                 </div>
-                <div className='pokeMoves'>
-                    <div className='levelMoves' />
-                    <div className='tmMoves' />
-                    <div className='eggMoves'/>
+                <div className='info-pokeMoves'>
+                    <div className='info-levelMoves' />
+                    <div className='info-tmMoves' />
+                    <div className='info-eggMoves'/>
                 </div>
             </div>    
 
