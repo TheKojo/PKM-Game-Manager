@@ -3,11 +3,10 @@
     font-size: 16px;
     color: #ffffff;
     /*background-color: #0099b5;*/
-    
 }
 
 
-.pkmBox {
+.g2-pkmBox {
     position: relative;
     float: left;
     background-color: #688c87;
@@ -27,18 +26,18 @@ img {
 }
 
 
-.logo {
+.g2-logo {
     display: block;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
 }
 
-.sprite {
+.g2-sprite {
     vertical-align: bottom;
 }
 
-.pkmName {
+.g2-pkmName {
     position: absolute;
     text-align: center;
     bottom: 0;
@@ -52,7 +51,7 @@ img {
     border-radius: 5px 5px 5px 5px;
 }
 
-.spriteDiv {
+.g2-spriteDiv {
     position: absolute;
     /*border: solid;
     border-color: blue;*/
@@ -61,79 +60,79 @@ img {
     bottom: 0;
 }
 
-.test{
+.g2-test {
     position: relative;
     top: 95px;
 }
 
-.NORMAL {
+.g2-NORMAL {
     background-color: #dedac1;
 }
 
-.GRASS {
+.g2-GRASS {
     background-color: #b2cf7c;
 }
 
-.FIRE {
+.g2-FIRE {
     background-color: #e8bbb5;
 }
 
-.WATER {
+.g2-WATER {
     background-color: #b9e5ff;
 }
 
-.ELECTRIC {
+.g2-ELECTRIC {
     background-color: #f5ecb0;
 }
 
-.FLYING {
+.g2-FLYING {
     background-color: #ccebff;
 }
 
-.BUG {
+.g2-BUG {
     background-color: #dfedbb;
 }
 
-.POISON {
+.g2-POISON {
     background-color: #b0a5c4;
 }
 
-.FIGHTING {
+.g2-FIGHTING {
     background-color: #d4ab9f;
 }
 
-.PSYCHIC {
+.g2-PSYCHIC {
     background-color: #ffbfd9;
 }
 
-.DARK {
+.g2-DARK {
     background-color: #969699;
 }
 
-.GHOST {
+.g2-GHOST {
     background-color: #9c8eab; /*#a39bab*/
 }
 
-.ICE {
+.g2-ICE {
     background-color: #dfffff;
 }
 
-.ROCK {
+.g2-ROCK {
     background-color: #b8b1ab; /*#a6a09a*/
 }
 
-.GROUND {
+.g2-GROUND {
     background-color: #decab1;
 }
 
-.STEEL {
+.g2-STEEL {
     background-color: #cee0e0;
 }
 
-.DRAGON {
+.g2-DRAGON {
     background-color: #bfa5c7;
 }
 
-.FAIRY {
+.g2-FAIRY {
     background-color: #ffccdf;
 }

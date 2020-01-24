@@ -54,20 +54,20 @@ export class GalleryTwo extends Component {
 
     render() {
         return (
-            <div className ='galleryBody'>
+            <div className ='g2-galleryBody'>
                 <link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' />
                 <div>
-                    <img src={logo} className='logo'/>
+                    <img src={logo} className='g2-logo'/>
 
                     {this.state.pkmList.map(pkm => (
                         <div key={pkm.pokemonId} >
-                            <div className={'pkmBox ' + pkm.type1}>
-                                <div className='test'>
-                                <div className = 'spriteDiv'>
-                                    <img src={require('./images/frontSprites/' + this.padNum(pkm.pokemonId) + '.png')} id={pkm.pokemonId} className='sprite' title={pkm.pokemonId} alt="pkm" />
+                            <div className={'g2-pkmBox g2-' + pkm.type1}>
+                                <div className='g2-test'>
+                                <div className = 'g2-spriteDiv'>
+                                    <img src={require('./images/frontSprites/' + this.padNum(pkm.pokemonId) + '.png')} id={pkm.pokemonId} className='g2-sprite' title={pkm.pokemonId} alt="pkm" />
                                     </div>
                                 </div>
-                                <div className = 'pkmName'>{pkm.name}</div>
+                                <div className = 'g2-pkmName'>{pkm.name}</div>
                             </div>
                         </div>
                     ))}

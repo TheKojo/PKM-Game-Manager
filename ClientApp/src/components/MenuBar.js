@@ -19,6 +19,9 @@ export class MenuBar extends Component {
                 <Link to="/gallery">
                     <button className="menuButton">Gallery</button>
                 </Link>
+                <Link to="/gallery2">
+                    <button className="menuButton">Gallery 2</button>
+                </Link>
             </div>
 
         );
