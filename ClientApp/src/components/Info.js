@@ -523,7 +523,7 @@ export class Info extends Component {
                             <b>ABHA</b> description
                         </div>
                     </div>
-                    <canvas id="statCanvas" width="236" height="128" />
+                    <canvas id="statCanvas" class="info-canvas" width="236" height="128" />
                     <div className='info-extraInfo'>
                         <div className='info-infoCol'>
                             <div className='info-height'><b>Height</b>{curPoke.height}</div>

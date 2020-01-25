@@ -218,7 +218,7 @@
     left: 200px;
 }
 
-canvas {
+.info-canvas {
     position: absolute;
     background-color: #becbcf;
     border-radius: 2px;

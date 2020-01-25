@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace pkm_game_manager.Models
 {
@@ -605,9 +606,43 @@ namespace pkm_game_manager.Models
 
         public List<Pokemon> getPkm()
         {
-            //var pkm = Pokemon.AsNoTracking().ToList();
+            List<Pokemon> pkm = new List<Pokemon>();
+            try
+            {
+                pkm = Pokemon.Where(p => p.Exclude == false).AsNoTracking().ToList();
+            }
+            catch
+            {
+                string csvtext = "";
+                using (var reader = new StreamReader(@"Sample Data\CSV\Pokemon.txt"))
+                {
+                    csvtext = reader.ReadToEnd();
+                }
+                var rows = csvtext.Split(new char[] {'\n'}, StringSplitOptions.RemoveEmptyEntries).Skip(1);
 
-            var pkm = Pokemon.Where(p => p.Exclude == false).AsNoTracking().ToList();
+                foreach (var pokes in rows)
+                {
+                    var cols = pokes.Split(',');
+                    var pkmModel = new Pokemon
+                    {
+                        PokemonId = Int32.Parse(cols[0]),
+                        DexId = Int32.Parse(cols[1]),
+                        Name = cols[2],
+                        InternalName = cols[3],
+                        Type1 = cols[4],
+                        Type2 = cols[5],
+                        HP = Int32.Parse(cols[6]),
+                        Attack = Int32.Parse(cols[7]),
+                        Defense = Int32.Parse(cols[8]),
+                        SpDef = Int32.Parse(cols[6]),
+                        SpAtk = Int32.Parse(cols[7]),
+                        Speed = Int32.Parse(cols[8])
+                    };
+
+                    pkm.Add(pkmModel);
+                }
+
+            }
 
             return pkm;
         }

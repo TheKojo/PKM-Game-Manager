@@ -53,6 +53,14 @@ export class GalleryTwo extends Component {
     }
 
     render() {
+        if (this.state.isLoading) {
+            return (
+                <div>
+                    <link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' />
+                    <p>Loading ...</p>
+                </div>
+            );
+        }
         return (
             <div className ='g2-galleryBody'>
                 <link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' />

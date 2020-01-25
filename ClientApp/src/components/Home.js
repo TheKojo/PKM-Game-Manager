@@ -429,7 +429,12 @@ export class Home extends Component {
             artwork, icon, frontSprite, backSprite, exportText} = this.state;
 
         if (isLoading) {
-            return <p>Loading ...</p>;
+            return (
+                <div>
+                    <link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' />
+                    <p>Loading ...</p>
+                </div>
+           );
         }
 
         return (
